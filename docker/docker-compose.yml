@@ -1,0 +1,23 @@
+version: '3.2'
+volumes:
+  data:
+services:
+  postgres:
+    image: postgres:9.6.6-alpine
+    container_name: library_postgres_unsafe
+    command: postgres -p 5432 -c config_file=/postgresql-custom.conf
+    volumes:
+      - ./postgres-unsafe/postgresql-custom.conf:/postgresql-custom.conf
+    environment:
+      - POSTGRES_USER=library
+      - POSTGRES_PASSWORD=library
+      - POSTGRES_DB=library
+    ports:
+    - "5432:5432"
+    healthcheck:
+      test: echo "SELECT 1" | psql -q -p 5432 -U library > /dev/null
+      interval: 10s
+      timeout: 1s
+      retries: 3
+    restart: always
+
