@@ -1,17 +1,15 @@
-package ru.otus.library.domain.entities;
+package ru.otus.library.app.genre.dto.response;
 
-public class DbGenre {
+public class DtoGetGenreResponse {
 
     private Integer id;
+
     private String name;
 
-    public DbGenre() { }
-
-    public DbGenre(String name) {
-        this.name = name;
+    public DtoGetGenreResponse() {
     }
 
-    public DbGenre(int id, String name) {
+    public DtoGetGenreResponse(Integer id, String name) {
         this.id = id;
         this.name = name;
     }

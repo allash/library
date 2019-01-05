@@ -8,15 +8,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.library.domain.entities.DbAuthor;
 import ru.otus.library.domain.entities.DbBook;
 import ru.otus.library.domain.entities.DbGenre;
-import ru.otus.library.domain.repositories.AuthorRepository;
-import ru.otus.library.domain.repositories.BookRepository;
-import ru.otus.library.domain.repositories.GenreRepository;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
+import java.util.Arrays;
+import java.util.Collections;
 
 @Configuration
 @AutoConfigureBefore({ FlywayAutoConfiguration.class })
@@ -39,32 +37,26 @@ public class DatabaseConfig {
     @Component
     public class FixtureLoader {
 
-        private AuthorRepository authorRepository;
-        private GenreRepository genreRepository;
-        private BookRepository bookRepository;
+        private FixtureGenerator fixtures;
 
-        public FixtureLoader(AuthorRepository authorRepository, GenreRepository genreRepository, BookRepository bookRepository) {
-            this.authorRepository = authorRepository;
-            this.genreRepository = genreRepository;
-            this.bookRepository = bookRepository;
+        public FixtureLoader(
+                FixtureGenerator fixtures) {
+            this.fixtures = fixtures;
         }
 
         @Transactional
         @PostConstruct
         public void load() {
+            DbGenre genre1 = fixtures.createGenre("Fantasy");
+            DbGenre genre2 = fixtures.createGenre("Novel");
 
-            DbBook book1 = bookRepository.save(new DbBook("Alien"));
-            System.out.println(book1.getId() + " " + book1.getTitle());
+            DbBook book1 = fixtures.createBook("Book 1", Arrays.asList(genre1, genre2));
+            DbBook book2 = fixtures.createBook("Book 2", Collections.singletonList(genre1));
+            DbBook book3 = fixtures.createBook("Book 3", Collections.singletonList(genre2));
 
-            DbAuthor author = authorRepository.save(new DbAuthor("John", "Doe"));
-            DbAuthor author2 = authorRepository.save(new DbAuthor("Jack", "Foo"));
-
-            System.out.println(author.getId() + " - " + author.getFirstName());
-            System.out.println(author2.getId() + " - " + author2.getFirstName());
-
-            DbGenre genre1 = genreRepository.save(new DbGenre("Fantasy"));
-
-            System.out.println(genre1.getId() + " " + genre1.getName());
+            fixtures.createAuthor("John", "Doe", Arrays.asList(book1, book2));
+            fixtures.createAuthor("Mark", "Foo", Collections.singletonList(book3));
+            fixtures.createAuthor("Bill", "NoBooks");
         }
     }
 }

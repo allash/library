@@ -1,5 +1,6 @@
 package ru.otus.library.domain.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DbAuthor {
@@ -12,15 +13,25 @@ public class DbAuthor {
 
     public DbAuthor() { }
 
-    public DbAuthor(Integer id, String firstName, String lastName) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
     public DbAuthor(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.books = new ArrayList<>();
+    }
+
+    public DbAuthor(Integer id, String firstName, String lastName) {
+        this (firstName, lastName);
+        this.id = id;
+    }
+
+    public DbAuthor(String firstName, String lastName, List<DbBook> books) {
+        this (firstName, lastName);
+        this.books = books;
+    }
+
+    public DbAuthor(Integer id, String firstName, String lastName, List<DbBook> books) {
+        this (id, firstName, lastName);
+        this.books = books;
     }
 
     public List<DbBook> getBooks() {

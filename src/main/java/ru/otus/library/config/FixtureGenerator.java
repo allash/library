@@ -8,6 +8,9 @@ import ru.otus.library.domain.repositories.AuthorRepository;
 import ru.otus.library.domain.repositories.BookRepository;
 import ru.otus.library.domain.repositories.GenreRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class FixtureGenerator {
 
@@ -22,12 +25,18 @@ public class FixtureGenerator {
     }
 
     public DbAuthor createAuthor(String firstName, String lastName) {
-        return authorRepository.save(new DbAuthor(firstName, lastName));
+        return createAuthor(firstName, lastName, new ArrayList<>());
+    }
+
+    public DbAuthor createAuthor(String firstName, String lastName, List<DbBook> books) {
+        return authorRepository.save(new DbAuthor(firstName, lastName, books));
     }
 
     public DbBook createBook(String title) {
-        return bookRepository.save(new DbBook(title));
+        return createBook(title, new ArrayList<>());
     }
+
+    public DbBook createBook(String title, List<DbGenre> genres) { return bookRepository.save(new DbBook(title, genres)); }
 
     public DbGenre createGenre(String name) {
         return genreRepository.save(new DbGenre(name));

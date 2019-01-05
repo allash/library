@@ -10,9 +10,7 @@ import ru.otus.library.domain.entities.DbGenre;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class GenreRepositoryJdbc implements GenreRepository {
@@ -36,22 +34,39 @@ public class GenreRepositoryJdbc implements GenreRepository {
     }
 
     @Override
+    public List<DbGenre> findByIdIn(Collection<Integer> collection) {
+        Map namedParams = Collections.singletonMap("ids", collection);
+        return namedParamsJdbcOperations.query("SELECT * FROM genre WHERE id IN (:ids)", namedParams, new GenreRowMapper());
+    }
+
+    @Override
     public List<DbGenre> findAll() {
         return namedParamsJdbcOperations.query("SELECT * FROM genre", new GenreRowMapper());
     }
+
     @Override
     public DbGenre save(DbGenre entity) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
-        String sql = "INSERT INTO genre (name) VALUES (?)";
+        createOrUpdate(keyHolder, entity);
+        entity.setId((Integer) keyHolder.getKey());
 
+        return entity;
+    }
+
+    private String getCreateOrUpdateSql(DbGenre genre) {
+        return genre.getId() != null
+                ? "UPDATE genre SET name = ? WHERE id = ?"
+                : "INSERT INTO genre (name) VALUES (?)";
+    }
+
+    private void createOrUpdate(KeyHolder keyHolder, DbGenre genre) {
         namedParamsJdbcOperations.getJdbcOperations().update(con -> {
-            PreparedStatement preparedStatement = con.prepareStatement(sql, new String[]{"id"});
-            preparedStatement.setString(1, entity.getName());
+            PreparedStatement preparedStatement = con.prepareStatement(getCreateOrUpdateSql(genre), new String[]{ "id" });
+            preparedStatement.setString(1, genre.getName());
+            if (genre.getId() != null) { preparedStatement.setInt(2, genre.getId()); }
             return preparedStatement;
         }, keyHolder);
-
-        return findById((Integer) keyHolder.getKey());
     }
 
     private static class GenreRowMapper implements RowMapper<DbGenre> {
