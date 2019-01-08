@@ -17,7 +17,12 @@ public class BookMapper {
                 .map(it -> new DtoGetBookResponse.DtoGetBookGenre(it.getId(), it.getName()))
                 .collect(Collectors.toList());
 
-        return new DtoGetBookResponse(book.getId(), book.getTitle(), genres);
+        List<DtoGetBookResponse.DtoGetBookAuthor> authors = book.getAuthors()
+                .stream()
+                .map(it -> new DtoGetBookResponse.DtoGetBookAuthor(it.getId(), it.getFirstName(), it.getLastName()))
+                .collect(Collectors.toList());
+
+        return new DtoGetBookResponse(book.getId(), book.getTitle(), genres, authors);
     }
 
     public List<DtoGetBookResponse> toList(List<DbBook> books) {

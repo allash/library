@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import ru.otus.library.domain.entities.DbAuthor;
 import ru.otus.library.domain.entities.DbBook;
 import ru.otus.library.domain.entities.DbGenre;
 
@@ -50,13 +51,13 @@ public class DatabaseConfig {
             DbGenre genre1 = fixtures.createGenre("Fantasy");
             DbGenre genre2 = fixtures.createGenre("Novel");
 
-            DbBook book1 = fixtures.createBook("Book 1", Arrays.asList(genre1, genre2));
-            DbBook book2 = fixtures.createBook("Book 2", Collections.singletonList(genre1));
-            DbBook book3 = fixtures.createBook("Book 3", Collections.singletonList(genre2));
+            DbAuthor author1 = fixtures.createAuthor("John", "Doe");
+            DbAuthor author2 = fixtures.createAuthor("Mark", "Foo");
+            DbAuthor author3 = fixtures.createAuthor("Bill", "NoBooks");
 
-            fixtures.createAuthor("John", "Doe", Arrays.asList(book1, book2));
-            fixtures.createAuthor("Mark", "Foo", Collections.singletonList(book3));
-            fixtures.createAuthor("Bill", "NoBooks");
+            fixtures.createBook("Book 1", Arrays.asList(genre1, genre2), Arrays.asList(author1, author2));
+            fixtures.createBook("Book 2", Collections.singletonList(genre1), Arrays.asList(author1, author3));
+            fixtures.createBook("Book 3", Collections.singletonList(genre2), Arrays.asList(author2, author3));
         }
     }
 }

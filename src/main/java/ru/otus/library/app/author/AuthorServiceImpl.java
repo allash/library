@@ -3,6 +3,7 @@ package ru.otus.library.app.author;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.otus.library.app.author.dto.request.DtoCreateOrUpdateAuthorRequest;
+import ru.otus.library.app.author.dto.response.DtoGetAuthorBookResponse;
 import ru.otus.library.app.author.dto.response.DtoGetAuthorResponse;
 import ru.otus.library.domain.entities.DbAuthor;
 import ru.otus.library.domain.repositories.AuthorRepository;
@@ -45,7 +46,6 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public DtoGetAuthorResponse createAuthor(DtoCreateOrUpdateAuthorRequest dto) {
         DbAuthor author = new DbAuthor(dto.getFirstName(), dto.getLastName());
-        author.setBooks(bookRepository.findByIdIn(dto.getBookIds()));
         return mapper.toDto(authorRepository.save(author));
     }
 
@@ -59,5 +59,11 @@ public class AuthorServiceImpl implements AuthorService {
         author.setLastName(dto.getLastName());
 
         return mapper.toDto(authorRepository.save(author));
+    }
+
+    @Override
+    public List<DtoGetAuthorBookResponse> getBooksByAuthorId(Integer id) {
+        if (authorRepository.findById(id) == null) throw new AuthorNotFoundByIdException(id);
+        return mapper.toDto(bookRepository.findByAuthorId(id));
     }
 }

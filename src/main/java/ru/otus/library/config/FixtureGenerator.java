@@ -25,18 +25,15 @@ public class FixtureGenerator {
     }
 
     public DbAuthor createAuthor(String firstName, String lastName) {
-        return createAuthor(firstName, lastName, new ArrayList<>());
-    }
-
-    public DbAuthor createAuthor(String firstName, String lastName, List<DbBook> books) {
-        return authorRepository.save(new DbAuthor(firstName, lastName, books));
+        return authorRepository.save(new DbAuthor(firstName, lastName));
     }
 
     public DbBook createBook(String title) {
-        return createBook(title, new ArrayList<>());
+        return createBook(title, new ArrayList<>(), new ArrayList<>());
     }
 
-    public DbBook createBook(String title, List<DbGenre> genres) { return bookRepository.save(new DbBook(title, genres)); }
+    public DbBook createBook(String title, List<DbGenre> genres, List<DbAuthor> authors) {
+        return bookRepository.save(new DbBook(title, genres, authors)); }
 
     public DbGenre createGenre(String name) {
         return genreRepository.save(new DbGenre(name));

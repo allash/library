@@ -5,6 +5,7 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import ru.otus.library.app.author.dto.request.DtoCreateOrUpdateAuthorRequest;
+import ru.otus.library.app.author.dto.response.DtoGetAuthorBookResponse;
 import ru.otus.library.app.author.dto.response.DtoGetAuthorResponse;
 import ru.otus.library.app.book.dto.request.DtoCreateOrUpdateBookRequest;
 import ru.otus.library.app.book.dto.response.DtoGetBookResponse;
@@ -21,28 +22,51 @@ public class LibraryShell extends BaseShell {
     @ShellMethod(value = "Get books", key = "getbooks")
     public String getBooks() {
 
-        List<DtoGetBookResponse> books = getResultList("/books", new ParameterizedTypeReference<List<DtoGetBookResponse>>() {});
+        List<DtoGetBookResponse> books = getResultList("/books",
+                new ParameterizedTypeReference<List<DtoGetBookResponse>>() { });
 
         return books
                 .stream()
-                .map(it -> it.getId() + " - " + it.getTitle() + "\n\t" +
+                .map(it -> it.getId() + " - " + it.getTitle() +
+                        " \n\t Genres: \n\t" +
                         it.getGenres()
                                 .stream()
                                 .map(genre -> genre.getId() + " - " + genre.getName())
-                                .collect(Collectors.joining("\n\t")))
+                                .collect(Collectors.joining("\n\t"))
+                        + " \n\t Authors: \n\t" +
+                        it.getAuthors()
+                                .stream()
+                                .map(author -> author.getId() + " - " + author.getFirstName() + ", " + author.getLastName())
+                                .collect(Collectors.joining("\n\t"))
+                )
+                .collect(Collectors.joining("\n"));
+    }
+
+    @ShellMethod(value = "Get books by author id", key = "getauthorbooks")
+    public String getBooksByAuthorId(@ShellOption Integer authorId) {
+        List<DtoGetAuthorBookResponse> books = getResultList("/authors/" + authorId + "/books",
+                new ParameterizedTypeReference<List<DtoGetAuthorBookResponse>>() { });
+
+        return books.stream()
+                .map(it -> it.getId() + " - " + it.getTitle())
                 .collect(Collectors.joining("\n"));
     }
 
     @ShellMethod(value = "Create book", key = "createbook")
-    public String createBook(@ShellOption String title, @ShellOption String genreIdsStr) {
+    public String createBook(@ShellOption String title, @ShellOption String genreIdsStr, @ShellOption String authorIdStr) {
 
         List<Integer> genreIds = Arrays.stream(genreIdsStr.split(","))
                 .map(it -> Integer.parseInt(it.trim()))
                 .collect(Collectors.toList());
 
-        DtoCreateOrUpdateBookRequest request = new DtoCreateOrUpdateBookRequest(title, genreIds);
+        List<Integer> authorIds = Arrays.stream(authorIdStr.split(","))
+                .map(it -> Integer.parseInt(it.trim()))
+                .collect(Collectors.toList());
 
-        DtoGetBookResponse response = postRequest("/books", request, new ParameterizedTypeReference<DtoGetBookResponse>() { });
+        DtoCreateOrUpdateBookRequest request = new DtoCreateOrUpdateBookRequest(title, genreIds, authorIds);
+
+        DtoGetBookResponse response = postRequest("/books", request, new ParameterizedTypeReference<DtoGetBookResponse>() {
+        });
 
         return "New book created: " + response.getId() + " - " + response.getTitle();
     }
@@ -50,35 +74,30 @@ public class LibraryShell extends BaseShell {
     @ShellMethod(value = "Get authors", key = "getauthors")
     public String getAuthors() {
 
-        List<DtoGetAuthorResponse> authors = getResultList("/authors", new ParameterizedTypeReference<List<DtoGetAuthorResponse>>() {});
+        List<DtoGetAuthorResponse> authors = getResultList("/authors", new ParameterizedTypeReference<List<DtoGetAuthorResponse>>() {
+        });
 
         return authors
                 .stream()
-                .map(it -> it.getId() + " - " + it.getFirstName() + ", " + it.getLastName() + "\n\t" +
-                        it.getBooks()
-                                .stream()
-                                .map(book -> book.getId() + " - " + book.getTitle())
-                                .collect(Collectors.joining("\n\t")))
+                .map(it -> it.getId() + " - " + it.getFirstName() + ", " + it.getLastName())
                 .collect(Collectors.joining("\n"));
     }
 
     @ShellMethod(value = "Create author", key = "createauthor")
-    public String createAuthor(@ShellOption String firstName, @ShellOption String lastName, @ShellOption String booksIdsStr) {
+    public String createAuthor(@ShellOption String firstName, @ShellOption String lastName) {
 
-        List<Integer> bookIds = Arrays.stream(booksIdsStr.split(","))
-                .map(it -> Integer.parseInt(it.trim()))
-                .collect(Collectors.toList());
+        DtoCreateOrUpdateAuthorRequest request = new DtoCreateOrUpdateAuthorRequest(firstName, lastName);
 
-        DtoCreateOrUpdateAuthorRequest request = new DtoCreateOrUpdateAuthorRequest(firstName, lastName, bookIds);
-
-        DtoGetAuthorResponse response = postRequest("/authors", request, new ParameterizedTypeReference<DtoGetAuthorResponse>() { });
+        DtoGetAuthorResponse response = postRequest("/authors", request, new ParameterizedTypeReference<DtoGetAuthorResponse>() {
+        });
 
         return "New author created: " + response.getId() + " - " + response.getFirstName() + ", " + response.getLastName();
     }
 
     @ShellMethod(value = "Get genres", key = "getgenres")
     public String getGenres() {
-        List<DtoGetGenreResponse> genres = getResultList("/genres", new ParameterizedTypeReference<List<DtoGetGenreResponse>>() {});
+        List<DtoGetGenreResponse> genres = getResultList("/genres", new ParameterizedTypeReference<List<DtoGetGenreResponse>>() {
+        });
 
         return genres
                 .stream()
@@ -91,7 +110,8 @@ public class LibraryShell extends BaseShell {
 
         DtoCreateOrUpdateGenreRequest request = new DtoCreateOrUpdateGenreRequest(name);
 
-        DtoGetGenreResponse response = postRequest("/genres", request, new ParameterizedTypeReference<DtoGetGenreResponse>() {});
+        DtoGetGenreResponse response = postRequest("/genres", request, new ParameterizedTypeReference<DtoGetGenreResponse>() {
+        });
 
         return "New genre created: " + response.getId() + " - " + response.getName();
     }

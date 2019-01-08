@@ -1,7 +1,5 @@
 package ru.otus.library.app.author.dto.response;
 
-import java.util.List;
-
 public class DtoGetAuthorResponse {
 
     private Integer id;
@@ -10,8 +8,6 @@ public class DtoGetAuthorResponse {
 
     private String lastName;
 
-    private List<AuthorBook> books;
-
     public DtoGetAuthorResponse() {
     }
 
@@ -19,11 +15,6 @@ public class DtoGetAuthorResponse {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-    }
-
-    public DtoGetAuthorResponse(Integer id, String firstName, String lastName, List<AuthorBook> books) {
-        this (id, firstName, lastName);
-        this.books = books;
     }
 
     public Integer getId() {
@@ -48,14 +39,6 @@ public class DtoGetAuthorResponse {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public List<AuthorBook> getBooks() {
-        return books;
-    }
-
-    public void setBooks(List<AuthorBook> books) {
-        this.books = books;
     }
 
     public static class AuthorBook {

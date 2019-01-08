@@ -12,6 +12,7 @@ import ru.otus.library.app.book.BookService;
 import ru.otus.library.app.book.BookServiceImpl;
 import ru.otus.library.app.book.dto.request.DtoCreateOrUpdateBookRequest;
 import ru.otus.library.app.book.dto.response.DtoGetBookResponse;
+import ru.otus.library.domain.entities.DbAuthor;
 import ru.otus.library.domain.entities.DbBook;
 import ru.otus.library.domain.entities.DbGenre;
 import ru.otus.library.domain.repositories.BookRepository;
@@ -49,8 +50,11 @@ public class BookServiceTest {
         DbGenre genre1 = new DbGenre(1, "One");
         DbGenre genre2 = new DbGenre(2, "Two");
 
-        DbBook book1 = new DbBook(1, "Bla", Arrays.asList(genre1, genre2));
-        DbBook book2 = new DbBook(2, "Bla2", Collections.singletonList(genre1));
+        DbAuthor author1 = new DbAuthor(1, "John", "Doe");
+        List<DbAuthor> dbAuthors = Collections.singletonList(author1);
+
+        DbBook book1 = new DbBook(1, "Bla", Arrays.asList(genre1, genre2), dbAuthors);
+        DbBook book2 = new DbBook(2, "Bla2", Collections.singletonList(genre1), dbAuthors);
         List<DbBook> dbBooks = Stream.of(book1, book2).sorted(Comparator.comparing(DbBook::getId)).collect(Collectors.toList());
 
         Mockito.when(bookRepository.findAll()).thenReturn(dbBooks);
@@ -63,6 +67,7 @@ public class BookServiceTest {
             assertThat(responses.get(i).getId()).isEqualTo(dbBooks.get(i).getId());
             assertThat(responses.get(i).getTitle()).isEqualTo(dbBooks.get(i).getTitle());
             assertThat(responses.get(i).getGenres().size()).isEqualTo(dbBooks.get(i).getGenres().size());
+            assertThat(responses.get(i).getAuthors().size()).isEqualTo(dbBooks.get(i).getAuthors().size());
         }
     }
 
@@ -72,10 +77,13 @@ public class BookServiceTest {
         DbGenre genre2 = new DbGenre(2, "Two");
         List<DbGenre> dbGenres = Arrays.asList(genre1, genre2);
 
+        DbAuthor author1 = new DbAuthor(1, "John", "Doe");
+        List<DbAuthor> dbAuthors = Collections.singletonList(author1);
+
         Integer id = 1;
         DtoCreateOrUpdateBookRequest request = new DtoCreateOrUpdateBookRequest("Bla", Arrays.asList(1, 2));
 
-        DbBook createdBook = new DbBook(id, request.getTitle(), dbGenres);
+        DbBook createdBook = new DbBook(id, request.getTitle(), dbGenres, dbAuthors);
 
         Mockito.when(genreRepository.findByIdIn(any())).thenReturn(dbGenres);
         Mockito.when(bookRepository.save(any())).thenReturn(createdBook);
@@ -86,5 +94,6 @@ public class BookServiceTest {
         assertThat(response.getId()).isEqualTo(id);
         assertThat(response.getTitle()).isEqualTo(request.getTitle());
         assertThat(response.getGenres().size()).isEqualTo(dbGenres.size());
+        assertThat(response.getAuthors().size()).isEqualTo(dbAuthors.size());
     }
 }

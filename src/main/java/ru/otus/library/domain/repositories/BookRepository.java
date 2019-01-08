@@ -11,4 +11,5 @@ public interface BookRepository {
     List<DbBook> findAll();
     DbBook save(DbBook entity);
     List<DbBook> findByIdIn(Collection<Integer> collection);
+    List<DbBook> findByAuthorId(Integer authorId);
 }

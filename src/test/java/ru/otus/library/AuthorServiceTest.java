@@ -13,7 +13,6 @@ import ru.otus.library.app.author.AuthorServiceImpl;
 import ru.otus.library.app.author.dto.request.DtoCreateOrUpdateAuthorRequest;
 import ru.otus.library.app.author.dto.response.DtoGetAuthorResponse;
 import ru.otus.library.domain.entities.DbAuthor;
-import ru.otus.library.domain.entities.DbBook;
 import ru.otus.library.domain.repositories.AuthorRepository;
 import ru.otus.library.domain.repositories.BookRepository;
 
@@ -43,11 +42,9 @@ public class AuthorServiceTest {
 
     @Test
     public void canGetAuthors() {
-        DbBook book1 = new DbBook(1, "bla");
-        DbBook book2 = new DbBook(2, "bla2");
 
-        DbAuthor author1 = new DbAuthor(1, UUID.randomUUID().toString(), UUID.randomUUID().toString(), Arrays.asList(book1, book2));
-        DbAuthor author2 = new DbAuthor(1, UUID.randomUUID().toString(), UUID.randomUUID().toString(), Collections.singletonList(book1));
+        DbAuthor author1 = new DbAuthor(1, UUID.randomUUID().toString(), UUID.randomUUID().toString());
+        DbAuthor author2 = new DbAuthor(1, UUID.randomUUID().toString(), UUID.randomUUID().toString());
         List<DbAuthor> authors = Stream.of(author1, author2).sorted(Comparator.comparing(DbAuthor::getId)).collect(Collectors.toList());
         Mockito.when(authorRepository.findAll()).thenReturn(authors);
 
@@ -58,21 +55,16 @@ public class AuthorServiceTest {
             assertThat(response.get(i).getId()).isEqualTo(authors.get(i).getId());
             assertThat(response.get(i).getFirstName()).isEqualTo(authors.get(i).getFirstName());
             assertThat(response.get(i).getLastName()).isEqualTo(authors.get(i).getLastName());
-            assertThat(response.get(i).getBooks().size()).isEqualTo(authors.get(i).getBooks().size());
         }
     }
 
     @Test
     public void canCreateAuthor() {
         Integer id = 1;
-        DbBook book1 = new DbBook(1, "bla");
-        DbBook book2 = new DbBook(2, "bla2");
-        List<DbBook> books = Arrays.asList(book1, book2);
 
         DtoCreateOrUpdateAuthorRequest request = new DtoCreateOrUpdateAuthorRequest(UUID.randomUUID().toString(), UUID.randomUUID().toString());
 
-        DbAuthor createdAuthor = new DbAuthor(id, request.getFirstName(), request.getLastName(), books);
-        Mockito.when(bookRepository.findByIdIn(any())).thenReturn(books);
+        DbAuthor createdAuthor = new DbAuthor(id, request.getFirstName(), request.getLastName());
         Mockito.when(authorRepository.save(any())).thenReturn(createdAuthor);
 
         DtoGetAuthorResponse response = authorService.createAuthor(request);
@@ -81,6 +73,5 @@ public class AuthorServiceTest {
         assertThat(response.getId()).isEqualTo(id);
         assertThat(response.getFirstName()).isEqualTo(request.getFirstName());
         assertThat(response.getLastName()).isEqualTo(request.getLastName());
-        assertThat(response.getBooks().size()).isEqualTo(books.size());
     }
 }
