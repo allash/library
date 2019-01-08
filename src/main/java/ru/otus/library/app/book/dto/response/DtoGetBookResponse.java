@@ -4,7 +4,7 @@ import java.util.List;
 
 public class DtoGetBookResponse {
 
-    private Integer id;
+    private Long id;
 
     private String title;
 
@@ -15,23 +15,23 @@ public class DtoGetBookResponse {
     public DtoGetBookResponse() {
     }
 
-    public DtoGetBookResponse(Integer id, String title) {
+    public DtoGetBookResponse(Long id, String title) {
         this.id = id;
         this.title = title;
     }
 
-    public DtoGetBookResponse(Integer id, String title, List<DtoGetBookGenre> genres, List<DtoGetBookAuthor> authors) {
+    public DtoGetBookResponse(Long id, String title, List<DtoGetBookGenre> genres, List<DtoGetBookAuthor> authors) {
         this.id = id;
         this.title = title;
         this.genres = genres;
         this.authors = authors;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -60,23 +60,23 @@ public class DtoGetBookResponse {
     }
 
     public static class DtoGetBookGenre {
-        private Integer id;
+        private Long id;
 
         private String name;
 
         public DtoGetBookGenre() {
         }
 
-        public DtoGetBookGenre(Integer id, String name) {
+        public DtoGetBookGenre(Long id, String name) {
             this.id = id;
             this.name = name;
         }
 
-        public Integer getId() {
+        public Long getId() {
             return id;
         }
 
-        public void setId(Integer id) {
+        public void setId(Long id) {
             this.id = id;
         }
 
@@ -90,24 +90,24 @@ public class DtoGetBookResponse {
     }
 
     public static class DtoGetBookAuthor {
-        private Integer id;
+        private Long id;
         private String firstName;
         private String lastName;
 
         public DtoGetBookAuthor() {
         }
 
-        public DtoGetBookAuthor(Integer id, String firstName, String lastName) {
+        public DtoGetBookAuthor(Long id, String firstName, String lastName) {
             this.id = id;
             this.firstName = firstName;
             this.lastName = lastName;
         }
 
-        public Integer getId() {
+        public Long getId() {
             return id;
         }
 
-        public void setId(Integer id) {
+        public void setId(Long id) {
             this.id = id;
         }
 

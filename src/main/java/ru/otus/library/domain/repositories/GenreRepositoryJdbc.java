@@ -34,7 +34,7 @@ public class GenreRepositoryJdbc implements GenreRepository {
     }
 
     @Override
-    public List<DbGenre> findByIdIn(Collection<Integer> collection) {
+    public List<DbGenre> findByIdIn(Collection<Long> collection) {
         Map namedParams = Collections.singletonMap("ids", collection);
         return namedParamsJdbcOperations.query("SELECT * FROM genre WHERE id IN (:ids)", namedParams, new GenreRowMapper());
     }
@@ -49,7 +49,7 @@ public class GenreRepositoryJdbc implements GenreRepository {
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         createOrUpdate(keyHolder, entity);
-        entity.setId((Integer) keyHolder.getKey());
+        entity.setId(keyHolder.getKey().longValue());
 
         return entity;
     }
@@ -64,7 +64,7 @@ public class GenreRepositoryJdbc implements GenreRepository {
         namedParamsJdbcOperations.getJdbcOperations().update(con -> {
             PreparedStatement preparedStatement = con.prepareStatement(getCreateOrUpdateSql(genre), new String[]{ "id" });
             preparedStatement.setString(1, genre.getName());
-            if (genre.getId() != null) { preparedStatement.setInt(2, genre.getId()); }
+            if (genre.getId() != null) { preparedStatement.setLong(2, genre.getId()); }
             return preparedStatement;
         }, keyHolder);
     }
@@ -72,7 +72,7 @@ public class GenreRepositoryJdbc implements GenreRepository {
     private static class GenreRowMapper implements RowMapper<DbGenre> {
         @Override
         public DbGenre mapRow(ResultSet rs, int rowNum) throws SQLException {
-            Integer id = rs.getInt("id");
+            Long id = rs.getLong("id");
             String name = rs.getString("name");
             return new DbGenre(id, name);
         }

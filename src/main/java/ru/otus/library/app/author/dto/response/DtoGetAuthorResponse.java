@@ -2,7 +2,7 @@ package ru.otus.library.app.author.dto.response;
 
 public class DtoGetAuthorResponse {
 
-    private Integer id;
+    private Long id;
 
     private String firstName;
 
@@ -11,17 +11,17 @@ public class DtoGetAuthorResponse {
     public DtoGetAuthorResponse() {
     }
 
-    public DtoGetAuthorResponse(Integer id, String firstName, String lastName) {
+    public DtoGetAuthorResponse(Long id, String firstName, String lastName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

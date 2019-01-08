@@ -15,6 +15,7 @@ import ru.otus.library.app.book.dto.response.DtoGetBookResponse;
 import ru.otus.library.domain.entities.DbAuthor;
 import ru.otus.library.domain.entities.DbBook;
 import ru.otus.library.domain.entities.DbGenre;
+import ru.otus.library.domain.repositories.AuthorRepository;
 import ru.otus.library.domain.repositories.BookRepository;
 import ru.otus.library.domain.repositories.GenreRepository;
 
@@ -39,22 +40,25 @@ public class BookServiceTest {
     @Mock
     private GenreRepository genreRepository;
 
+    @Mock
+    private AuthorRepository authorRepository;
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        bookService = new BookServiceImpl(bookRepository, genreRepository, new BookMapper());
+        bookService = new BookServiceImpl(bookRepository, genreRepository, authorRepository, new BookMapper());
     }
 
     @Test
     public void canGetBooks() {
-        DbGenre genre1 = new DbGenre(1, "One");
-        DbGenre genre2 = new DbGenre(2, "Two");
+        DbGenre genre1 = new DbGenre(1L, "One");
+        DbGenre genre2 = new DbGenre(2L, "Two");
 
-        DbAuthor author1 = new DbAuthor(1, "John", "Doe");
+        DbAuthor author1 = new DbAuthor(1L, "John", "Doe");
         List<DbAuthor> dbAuthors = Collections.singletonList(author1);
 
-        DbBook book1 = new DbBook(1, "Bla", Arrays.asList(genre1, genre2), dbAuthors);
-        DbBook book2 = new DbBook(2, "Bla2", Collections.singletonList(genre1), dbAuthors);
+        DbBook book1 = new DbBook(1L, "Bla", Arrays.asList(genre1, genre2), dbAuthors);
+        DbBook book2 = new DbBook(2L, "Bla2", Collections.singletonList(genre1), dbAuthors);
         List<DbBook> dbBooks = Stream.of(book1, book2).sorted(Comparator.comparing(DbBook::getId)).collect(Collectors.toList());
 
         Mockito.when(bookRepository.findAll()).thenReturn(dbBooks);
@@ -73,15 +77,15 @@ public class BookServiceTest {
 
     @Test
     public void canCreateBook() {
-        DbGenre genre1 = new DbGenre(1, "One");
-        DbGenre genre2 = new DbGenre(2, "Two");
+        DbGenre genre1 = new DbGenre(1L, "One");
+        DbGenre genre2 = new DbGenre(2L, "Two");
         List<DbGenre> dbGenres = Arrays.asList(genre1, genre2);
 
-        DbAuthor author1 = new DbAuthor(1, "John", "Doe");
+        DbAuthor author1 = new DbAuthor(1L, "John", "Doe");
         List<DbAuthor> dbAuthors = Collections.singletonList(author1);
 
-        Integer id = 1;
-        DtoCreateOrUpdateBookRequest request = new DtoCreateOrUpdateBookRequest("Bla", Arrays.asList(1, 2));
+        Long id = 1L;
+        DtoCreateOrUpdateBookRequest request = new DtoCreateOrUpdateBookRequest("Bla", Arrays.asList(1L, 2L), Collections.singletonList(author1.getId()));
 
         DbBook createdBook = new DbBook(id, request.getTitle(), dbGenres, dbAuthors);
 

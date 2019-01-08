@@ -8,9 +8,9 @@ public class DtoCreateOrUpdateBookRequest {
     @NotBlank
     private String title;
 
-    private List<Integer> genreIds;
+    private List<Long> genreIds;
 
-    private List<Integer> authorIds;
+    private List<Long> authorIds;
 
     public DtoCreateOrUpdateBookRequest() {
     }
@@ -19,7 +19,7 @@ public class DtoCreateOrUpdateBookRequest {
         this.title = title;
     }
 
-    public DtoCreateOrUpdateBookRequest(@NotBlank String title, List<Integer> genreIds, List<Integer> authorIds) {
+    public DtoCreateOrUpdateBookRequest(@NotBlank String title, List<Long> genreIds, List<Long> authorIds) {
         this.title = title;
         this.genreIds = genreIds;
         this.authorIds = authorIds;
@@ -33,19 +33,19 @@ public class DtoCreateOrUpdateBookRequest {
         this.title = title;
     }
 
-    public List<Integer> getGenreIds() {
+    public List<Long> getGenreIds() {
         return genreIds;
     }
 
-    public void setGenreIds(List<Integer> genreIds) {
+    public void setGenreIds(List<Long> genreIds) {
         this.genreIds = genreIds;
     }
 
-    public List<Integer> getAuthorIds() {
+    public List<Long> getAuthorIds() {
         return authorIds;
     }
 
-    public void setAuthorIds(List<Integer> authorIds) {
+    public void setAuthorIds(List<Long> authorIds) {
         this.authorIds = authorIds;
     }
 }

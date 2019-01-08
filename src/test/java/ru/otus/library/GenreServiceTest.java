@@ -39,8 +39,8 @@ public class GenreServiceTest {
 
     @Test
     public void canGetGenres() {
-        DbGenre genre1 = new DbGenre(1, "One");
-        DbGenre genre2 = new DbGenre(2, "Two");
+        DbGenre genre1 = new DbGenre(1L, "One");
+        DbGenre genre2 = new DbGenre(2L, "Two");
         List<DbGenre> dbGenres = Stream.of(genre1, genre2).sorted(Comparator.comparing(DbGenre::getId)).collect(Collectors.toList());
         Mockito.when(genreRepository.findAll()).thenReturn(dbGenres);
 
@@ -56,7 +56,7 @@ public class GenreServiceTest {
 
     @Test
     public void canCreateGenre() {
-        Integer genreId = 1;
+        Long genreId = 1L;
         DtoCreateOrUpdateGenreRequest request = new DtoCreateOrUpdateGenreRequest("One");
 
         Mockito.when(genreRepository.save(any())).thenReturn(new DbGenre(genreId, request.getName()));

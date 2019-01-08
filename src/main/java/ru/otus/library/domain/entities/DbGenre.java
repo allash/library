@@ -2,7 +2,7 @@ package ru.otus.library.domain.entities;
 
 public class DbGenre {
 
-    private Integer id;
+    private Long id;
     private String name;
 
     public DbGenre() { }
@@ -11,16 +11,16 @@ public class DbGenre {
         this.name = name;
     }
 
-    public DbGenre(int id, String name) {
+    public DbGenre(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

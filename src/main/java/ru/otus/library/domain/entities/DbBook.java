@@ -5,7 +5,7 @@ import java.util.List;
 
 public class DbBook {
 
-    private Integer id;
+    private Long id;
     private String title;
 
     private List<DbGenre> genres;
@@ -19,7 +19,7 @@ public class DbBook {
         this.authors = new ArrayList<>();
     }
 
-    public DbBook(int id, String title) {
+    public DbBook(Long id, String title) {
         this (title);
         this.id = id;
     }
@@ -30,17 +30,17 @@ public class DbBook {
         this.authors = authors;
     }
 
-    public DbBook(Integer id, String title, List<DbGenre> genres, List<DbAuthor> authors) {
+    public DbBook(Long id, String title, List<DbGenre> genres, List<DbAuthor> authors) {
         this (id, title);
         this.genres = genres;
         this.authors = authors;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

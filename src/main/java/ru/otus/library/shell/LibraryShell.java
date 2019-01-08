@@ -55,12 +55,12 @@ public class LibraryShell extends BaseShell {
     @ShellMethod(value = "Create book", key = "createbook")
     public String createBook(@ShellOption String title, @ShellOption String genreIdsStr, @ShellOption String authorIdStr) {
 
-        List<Integer> genreIds = Arrays.stream(genreIdsStr.split(","))
-                .map(it -> Integer.parseInt(it.trim()))
+        List<Long> genreIds = Arrays.stream(genreIdsStr.split(","))
+                .map(it -> Long.parseLong(it.trim()))
                 .collect(Collectors.toList());
 
-        List<Integer> authorIds = Arrays.stream(authorIdStr.split(","))
-                .map(it -> Integer.parseInt(it.trim()))
+        List<Long> authorIds = Arrays.stream(authorIdStr.split(","))
+                .map(it -> Long.parseLong(it.trim()))
                 .collect(Collectors.toList());
 
         DtoCreateOrUpdateBookRequest request = new DtoCreateOrUpdateBookRequest(title, genreIds, authorIds);

@@ -10,5 +10,5 @@ public interface AuthorRepository {
     DbAuthor findById(Integer id);
     List<DbAuthor> findAll();
     DbAuthor save(DbAuthor entity);
-    List<DbAuthor> findByIdIn(Collection<Integer> collection);
+    List<DbAuthor> findByIdIn(Collection<Long> collection);
 }

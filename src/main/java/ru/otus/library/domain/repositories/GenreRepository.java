@@ -10,5 +10,5 @@ public interface GenreRepository {
     DbGenre findById(Integer id);
     List<DbGenre> findAll();
     DbGenre save(DbGenre entity);
-    List<DbGenre> findByIdIn(Collection<Integer> collection);
+    List<DbGenre> findByIdIn(Collection<Long> collection);
 }

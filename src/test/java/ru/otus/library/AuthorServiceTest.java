@@ -43,8 +43,8 @@ public class AuthorServiceTest {
     @Test
     public void canGetAuthors() {
 
-        DbAuthor author1 = new DbAuthor(1, UUID.randomUUID().toString(), UUID.randomUUID().toString());
-        DbAuthor author2 = new DbAuthor(1, UUID.randomUUID().toString(), UUID.randomUUID().toString());
+        DbAuthor author1 = new DbAuthor(1L, UUID.randomUUID().toString(), UUID.randomUUID().toString());
+        DbAuthor author2 = new DbAuthor(2L, UUID.randomUUID().toString(), UUID.randomUUID().toString());
         List<DbAuthor> authors = Stream.of(author1, author2).sorted(Comparator.comparing(DbAuthor::getId)).collect(Collectors.toList());
         Mockito.when(authorRepository.findAll()).thenReturn(authors);
 
@@ -60,7 +60,7 @@ public class AuthorServiceTest {
 
     @Test
     public void canCreateAuthor() {
-        Integer id = 1;
+        Long id = 1L;
 
         DtoCreateOrUpdateAuthorRequest request = new DtoCreateOrUpdateAuthorRequest(UUID.randomUUID().toString(), UUID.randomUUID().toString());
 

@@ -2,7 +2,7 @@ package ru.otus.library.domain.entities;
 
 public class DbAuthor {
 
-    private Integer id;
+    private Long id;
     private String firstName;
     private String lastName;
 
@@ -13,16 +13,16 @@ public class DbAuthor {
         this.lastName = lastName;
     }
 
-    public DbAuthor(Integer id, String firstName, String lastName) {
+    public DbAuthor(Long id, String firstName, String lastName) {
         this (firstName, lastName);
         this.id = id;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

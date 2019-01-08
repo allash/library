@@ -32,7 +32,7 @@ public class AuthorRepositoryJdbc implements AuthorRepository {
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         createOrUpdate(keyHolder, author);
-        author.setId((Integer) keyHolder.getKey());
+        author.setId(keyHolder.getKey().longValue());
 
         return author;
     }
@@ -49,14 +49,14 @@ public class AuthorRepositoryJdbc implements AuthorRepository {
             preparedStatement.setString(1, author.getFirstName());
             preparedStatement.setString(2, author.getLastName());
             if (author.getId() != null) {
-                preparedStatement.setInt(3, author.getId());
+                preparedStatement.setLong(3, author.getId());
             }
             return preparedStatement;
         }, keyHolder);
     }
 
     @Override
-    public List<DbAuthor> findByIdIn(Collection<Integer> collection) {
+    public List<DbAuthor> findByIdIn(Collection<Long> collection) {
         Map namedParams = Collections.singletonMap("ids", collection);
         return namedParamsJdbcOperations.query("SELECT * FROM author WHERE id IN (:ids)", namedParams, new AuthorRowMapper());
     }
@@ -76,7 +76,7 @@ public class AuthorRepositoryJdbc implements AuthorRepository {
     private static class AuthorRowMapper implements RowMapper<DbAuthor> {
         @Override
         public DbAuthor mapRow(ResultSet rs, int rowNum) throws SQLException {
-            Integer id = rs.getInt("id");
+            Long id = rs.getLong("id");
             String firstName = rs.getString("first_name");
             String lastName = rs.getString("last_name");
             return new DbAuthor(id, firstName, lastName);

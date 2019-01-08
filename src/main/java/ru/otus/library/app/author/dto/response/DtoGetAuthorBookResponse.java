@@ -2,22 +2,22 @@ package ru.otus.library.app.author.dto.response;
 
 public class DtoGetAuthorBookResponse {
 
-    private int id;
+    private Long id;
     private String title;
 
     public DtoGetAuthorBookResponse() {
     }
 
-    public DtoGetAuthorBookResponse(int id, String title) {
+    public DtoGetAuthorBookResponse(Long id, String title) {
         this.id = id;
         this.title = title;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
