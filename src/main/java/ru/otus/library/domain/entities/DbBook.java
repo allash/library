@@ -29,7 +29,7 @@ public class DbBook {
     )
     private List<DbAuthor> authors;
 
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
     private List<DbComment> comments;
 
     public DbBook() { }

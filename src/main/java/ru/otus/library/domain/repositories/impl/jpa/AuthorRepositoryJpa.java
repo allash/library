@@ -2,6 +2,7 @@ package ru.otus.library.domain.repositories.impl.jpa;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.library.domain.entities.DbAuthor;
 import ru.otus.library.domain.repositories.interfaces.AuthorRepository;
 
@@ -44,9 +45,8 @@ public class AuthorRepositoryJpa implements AuthorRepository {
 
     @Override
     public List<DbAuthor> findByIdIn(Collection<Long> collection) {
-        Map namedParams = Collections.singletonMap("ids", collection);
         TypedQuery<DbAuthor> query = entityManager.createQuery("SELECT a FROM DbAuthor a WHERE a.id IN (:ids)", DbAuthor.class);
-        query.setParameter("ids", namedParams);
+        query.setParameter("ids", collection);
         return query.getResultList();
     }
 }

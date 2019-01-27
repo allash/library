@@ -23,8 +23,7 @@ public class DatabaseConfig {
         Flyway flyway = new Flyway();
         flyway.setDataSource(dataSource);
         flyway.clean();
-        int migrated = flyway.migrate();
-        System.out.println(migrated);
+        flyway.migrate();
         return flyway;
     }
 

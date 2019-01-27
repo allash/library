@@ -1,3 +1,6 @@
+server:
+  port: 8081
+
 logging:
   level:
     ROOT: INFO
@@ -18,7 +21,7 @@ spring:
     active: test
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:library_test;MODE=PostgreSQL;DB_CLOSE_DELAY=-1
+    url: jdbc:h2:mem:library_test;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false
     username: library
     password: library
   enableMigration: true
@@ -31,6 +34,8 @@ spring:
   shell:
     interactive:
       enabled: false
+  flyway:
+    locations: classpath:/db/migration
 management:
   endpoints:
     web:
@@ -38,5 +43,8 @@ management:
         include: info, health, beans
 
 language-tag: en-US
+
+library:
+  api: http://localhost:8081/api
 
 

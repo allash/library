@@ -2,6 +2,7 @@ package ru.otus.library.domain.repositories.impl.jpa;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.library.domain.entities.DbGenre;
 import ru.otus.library.domain.repositories.interfaces.GenreRepository;
 
@@ -44,9 +45,8 @@ public class GenreRepositoryJpa implements GenreRepository {
 
     @Override
     public List<DbGenre> findByIdIn(Collection<Long> collection) {
-        Map namedParams = Collections.singletonMap("ids", collection);
         TypedQuery<DbGenre> query = entityManager.createQuery("SELECT g FROM DbGenre g WHERE g.id IN (:ids)", DbGenre.class);
-        query.setParameter("ids", namedParams);
+        query.setParameter("ids", collection);
         return query.getResultList();
     }
 }
