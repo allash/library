@@ -1,4 +1,4 @@
-package ru.otus.library;
+package ru.otus.library.unit.services;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,19 +10,20 @@ import org.mockito.junit.MockitoJUnitRunner;
 import ru.otus.library.app.book.BookMapper;
 import ru.otus.library.app.book.BookService;
 import ru.otus.library.app.book.BookServiceImpl;
+import ru.otus.library.app.book.dto.request.DtoCreateCommentRequest;
 import ru.otus.library.app.book.dto.request.DtoCreateOrUpdateBookRequest;
+import ru.otus.library.app.book.dto.response.DtoGetBookCommentResponse;
 import ru.otus.library.app.book.dto.response.DtoGetBookResponse;
 import ru.otus.library.domain.entities.DbAuthor;
 import ru.otus.library.domain.entities.DbBook;
+import ru.otus.library.domain.entities.DbComment;
 import ru.otus.library.domain.entities.DbGenre;
-import ru.otus.library.domain.repositories.AuthorRepository;
-import ru.otus.library.domain.repositories.BookRepository;
-import ru.otus.library.domain.repositories.GenreRepository;
+import ru.otus.library.domain.repositories.interfaces.AuthorRepository;
+import ru.otus.library.domain.repositories.interfaces.BookRepository;
+import ru.otus.library.domain.repositories.interfaces.CommentRepository;
+import ru.otus.library.domain.repositories.interfaces.GenreRepository;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -43,10 +44,13 @@ public class BookServiceTest {
     @Mock
     private AuthorRepository authorRepository;
 
+    @Mock
+    private CommentRepository commentRepository;
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        bookService = new BookServiceImpl(bookRepository, genreRepository, authorRepository, new BookMapper());
+        bookService = new BookServiceImpl(bookRepository, genreRepository, authorRepository, commentRepository, new BookMapper());
     }
 
     @Test
@@ -99,5 +103,40 @@ public class BookServiceTest {
         assertThat(response.getTitle()).isEqualTo(request.getTitle());
         assertThat(response.getGenres().size()).isEqualTo(dbGenres.size());
         assertThat(response.getAuthors().size()).isEqualTo(dbAuthors.size());
+    }
+    
+    @Test
+    public void canGetComments() {
+        Long bookId = 1L;
+        
+        DbComment comment1 = new DbComment(1L, UUID.randomUUID().toString());
+        DbComment comment2 = new DbComment(1L, UUID.randomUUID().toString());
+        List<DbComment> dbComments = Arrays.asList(comment1, comment2);
+        
+        Mockito.when(commentRepository.findAllByBookId(bookId)).thenReturn(dbComments);
+        
+        List<DtoGetBookCommentResponse> response = bookService.getCommentsByBookId(bookId);
+        
+        assertThat(response.size()).isEqualTo(dbComments.size());
+        for (int i = 0; i < response.size(); i++) {
+            assertThat(response.get(i).getId()).isEqualTo(dbComments.get(i).getId());
+            assertThat(response.get(i).getText()).isEqualTo(dbComments.get(i).getText());
+        }
+    }
+
+    @Test
+    public void canCreateComment() {
+        Long bookId = 1L;
+        Long commentId = 1L;
+        DbBook book = new DbBook(1L, UUID.randomUUID().toString());
+        DtoCreateCommentRequest request = new DtoCreateCommentRequest(UUID.randomUUID().toString());
+
+        Mockito.when(bookRepository.findById(bookId)).thenReturn(book);
+        Mockito.when(commentRepository.save(any())).thenReturn(new DbComment(commentId, request.getText()));
+
+        DtoGetBookCommentResponse response = bookService.createComment(bookId, request);
+        assertThat(response).isNotNull();
+        assertThat(response.getId()).isEqualTo(commentId);
+        assertThat(response.getText()).isEqualTo(request.getText());
     }
 }

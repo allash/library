@@ -1,7 +1,13 @@
 package ru.otus.library.domain.entities;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "genre")
 public class DbGenre {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
 

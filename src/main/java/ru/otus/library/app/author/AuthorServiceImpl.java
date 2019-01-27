@@ -6,8 +6,8 @@ import ru.otus.library.app.author.dto.request.DtoCreateOrUpdateAuthorRequest;
 import ru.otus.library.app.author.dto.response.DtoGetAuthorBookResponse;
 import ru.otus.library.app.author.dto.response.DtoGetAuthorResponse;
 import ru.otus.library.domain.entities.DbAuthor;
-import ru.otus.library.domain.repositories.AuthorRepository;
-import ru.otus.library.domain.repositories.BookRepository;
+import ru.otus.library.domain.repositories.interfaces.AuthorRepository;
+import ru.otus.library.domain.repositories.interfaces.BookRepository;
 import ru.otus.library.shared.exceptions.author.AuthorNotFoundByIdException;
 
 import java.util.List;
@@ -35,7 +35,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public DtoGetAuthorResponse getAuthorById(Integer id) {
+    public DtoGetAuthorResponse getAuthorById(Long id) {
 
         DbAuthor author = authorRepository.findById(id);
         if (author == null) throw new AuthorNotFoundByIdException(id);
@@ -50,7 +50,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public DtoGetAuthorResponse updateAuthor(Integer id, DtoCreateOrUpdateAuthorRequest dto) {
+    public DtoGetAuthorResponse updateAuthor(Long id, DtoCreateOrUpdateAuthorRequest dto) {
 
         DbAuthor author = authorRepository.findById(id);
         if (author == null) throw new AuthorNotFoundByIdException(id);
@@ -62,7 +62,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public List<DtoGetAuthorBookResponse> getBooksByAuthorId(Integer id) {
+    public List<DtoGetAuthorBookResponse> getBooksByAuthorId(Long id) {
         if (authorRepository.findById(id) == null) throw new AuthorNotFoundByIdException(id);
         return mapper.toDto(bookRepository.findByAuthorId(id));
     }

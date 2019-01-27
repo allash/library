@@ -1,4 +1,4 @@
-package ru.otus.library.domain.repositories;
+package ru.otus.library.domain.repositories.impl.jdbc;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
@@ -6,6 +6,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ru.otus.library.domain.entities.DbGenre;
+import ru.otus.library.domain.repositories.interfaces.GenreRepository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,13 +22,12 @@ public class GenreRepositoryJdbc implements GenreRepository {
         this.namedParamsJdbcOperations = namedParamsJdbcOperations;
     }
 
-    @Override
-    public int count() {
-        return namedParamsJdbcOperations.getJdbcOperations().queryForObject("SELECT count(*) FROM genre", Integer.class);
+    public long count() {
+        return namedParamsJdbcOperations.getJdbcOperations().queryForObject("SELECT count(*) FROM genre", Long.class);
     }
 
     @Override
-    public DbGenre findById(Integer id) {
+    public DbGenre findById(Long id) {
         final Map<String, Object> params = new HashMap<>(1);
         params.put("id", id);
         return namedParamsJdbcOperations.queryForObject("SELECT * FROM genre where id = :id", params, new GenreRowMapper());

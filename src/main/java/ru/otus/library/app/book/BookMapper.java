@@ -1,8 +1,10 @@
 package ru.otus.library.app.book;
 
 import org.springframework.stereotype.Component;
+import ru.otus.library.app.book.dto.response.DtoGetBookCommentResponse;
 import ru.otus.library.app.book.dto.response.DtoGetBookResponse;
 import ru.otus.library.domain.entities.DbBook;
+import ru.otus.library.domain.entities.DbComment;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,5 +29,13 @@ public class BookMapper {
 
     public List<DtoGetBookResponse> toList(List<DbBook> books) {
         return books.stream().map(this::toDto).collect(Collectors.toList());
+    }
+
+    public DtoGetBookCommentResponse toCommentDto(DbComment comment) {
+        return new DtoGetBookCommentResponse(comment.getId(), comment.getText());
+    }
+
+    public List<DtoGetBookCommentResponse> toCommentsList(List<DbComment> comments) {
+        return comments.stream().map(this::toCommentDto).collect(Collectors.toList());
     }
 }

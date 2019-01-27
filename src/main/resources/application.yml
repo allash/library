@@ -3,6 +3,8 @@ server:
 logging:
   level:
     ROOT: INFO
+    ru:
+      otus: TRACE
 spring:
   profiles:
     active: dev
@@ -12,8 +14,15 @@ spring:
     username: library
     password: library
   enableMigration: true
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob.non_contextual_creation: true
 library:
   api: http://localhost:8080/api
+
+
 
 
 

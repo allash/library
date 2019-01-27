@@ -1,4 +1,4 @@
-package ru.otus.library;
+package ru.otus.library.unit.services;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +13,7 @@ import ru.otus.library.app.genre.GenreServiceImpl;
 import ru.otus.library.app.genre.dto.request.DtoCreateOrUpdateGenreRequest;
 import ru.otus.library.app.genre.dto.response.DtoGetGenreResponse;
 import ru.otus.library.domain.entities.DbGenre;
-import ru.otus.library.domain.repositories.GenreRepository;
+import ru.otus.library.domain.repositories.interfaces.GenreRepository;
 
 import java.util.Comparator;
 import java.util.List;

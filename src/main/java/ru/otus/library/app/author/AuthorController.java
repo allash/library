@@ -27,7 +27,7 @@ public class AuthorController {
     }
 
     @GetMapping("/{id}")
-    public DtoGetAuthorResponse getAuthorById(@PathVariable Integer id) {
+    public DtoGetAuthorResponse getAuthorById(@PathVariable Long id) {
         return authorService.getAuthorById(id);
     }
 
@@ -38,11 +38,11 @@ public class AuthorController {
     }
 
     @PutMapping("/{id}")
-    public DtoGetAuthorResponse updateAuthor(@PathVariable Integer id, @Valid @RequestBody DtoCreateOrUpdateAuthorRequest dto) {
+    public DtoGetAuthorResponse updateAuthor(@PathVariable Long id, @Valid @RequestBody DtoCreateOrUpdateAuthorRequest dto) {
         return authorService.updateAuthor(id, dto);
     }
 
     @GetMapping("/{id}/books")
-    public List<DtoGetAuthorBookResponse> getBooksByAuthorId(@PathVariable Integer id) { return authorService.getBooksByAuthorId(id); }
+    public List<DtoGetAuthorBookResponse> getBooksByAuthorId(@PathVariable Long id) { return authorService.getBooksByAuthorId(id); }
 }
 

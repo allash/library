@@ -3,7 +3,9 @@ package ru.otus.library.app.book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.otus.library.app.book.dto.request.DtoCreateCommentRequest;
 import ru.otus.library.app.book.dto.request.DtoCreateOrUpdateBookRequest;
+import ru.otus.library.app.book.dto.response.DtoGetBookCommentResponse;
 import ru.otus.library.app.book.dto.response.DtoGetBookResponse;
 
 import javax.validation.Valid;
@@ -26,7 +28,7 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public DtoGetBookResponse getBookById(@PathVariable Integer id) {
+    public DtoGetBookResponse getBookById(@PathVariable Long id) {
         return bookService.getBookById(id);
     }
 
@@ -37,7 +39,17 @@ public class BookController {
     }
 
     @PutMapping("/id")
-    public DtoGetBookResponse updateBook(@PathVariable Integer id, @Valid @RequestBody DtoCreateOrUpdateBookRequest dto) {
+    public DtoGetBookResponse updateBook(@PathVariable Long id, @Valid @RequestBody DtoCreateOrUpdateBookRequest dto) {
         return bookService.updateBook(id, dto);
+    }
+
+    @GetMapping("/{bookId}/comments")
+    public List<DtoGetBookCommentResponse> getCommentsByBookId(@PathVariable Long bookId) {
+        return bookService.getCommentsByBookId(bookId);
+    }
+
+    @PostMapping("/{bookId}/comments")
+    public DtoGetBookCommentResponse createComment(@PathVariable Long bookId, @Valid @RequestBody DtoCreateCommentRequest body) {
+        return bookService.createComment(bookId, body);
     }
 }
