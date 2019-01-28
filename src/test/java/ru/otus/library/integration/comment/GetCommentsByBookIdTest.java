@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import ru.otus.library.app.book.dto.response.DtoGetBookCommentResponse;
+import ru.otus.library.app.comment.dto.response.DtoGetCommentResponse;
 import ru.otus.library.domain.entities.DbBook;
 import ru.otus.library.domain.entities.DbComment;
 import ru.otus.library.integration.BaseSpringTest;
@@ -45,8 +45,8 @@ public class GetCommentsByBookIdTest extends BaseSpringTest {
 
         AuthContext ctx = getValidContext();
 
-        ResponseEntity<List<DtoGetBookCommentResponse>> result = new GenericRestClient.Get<DtoGetBookCommentResponse>()
-                .getResultList(createURL("/books/" + ctx.book.getId() + "/comments"), new ParameterizedTypeReference<List<DtoGetBookCommentResponse>>() {});
+        ResponseEntity<List<DtoGetCommentResponse>> result = new GenericRestClient.Get<DtoGetCommentResponse>()
+                .getResultList(createURL("/books/" + ctx.book.getId() + "/comments"), new ParameterizedTypeReference<List<DtoGetCommentResponse>>() {});
 
         assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(result.getBody().size()).isEqualTo(ctx.comments.size());

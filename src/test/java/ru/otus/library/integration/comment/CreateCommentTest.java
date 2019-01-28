@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import ru.otus.library.app.book.dto.request.DtoCreateCommentRequest;
+import ru.otus.library.app.comment.dto.request.DtoCreateCommentRequest;
 import ru.otus.library.domain.entities.DbBook;
 import ru.otus.library.domain.entities.DbComment;
 import ru.otus.library.domain.repositories.interfaces.BookRepository;
