@@ -1,4 +1,4 @@
-package ru.otus.library.integration.book;
+package ru.otus.library.integration.comment;
 
 import org.junit.Test;
 import org.springframework.core.ParameterizedTypeReference;
@@ -46,7 +46,7 @@ public class GetCommentsByBookIdTest extends BaseSpringTest {
         AuthContext ctx = getValidContext();
 
         ResponseEntity<List<DtoGetCommentResponse>> result = new GenericRestClient.Get<DtoGetCommentResponse>()
-                .getResultList(createURL("/books/" + ctx.book.getId() + "/comments"), new ParameterizedTypeReference<List<DtoGetCommentResponse>>() {});
+                .getResultList(createURL("/comments/" + ctx.book.getId()), new ParameterizedTypeReference<List<DtoGetCommentResponse>>() {});
 
         assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(result.getBody().size()).isEqualTo(ctx.comments.size());

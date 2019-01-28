@@ -52,10 +52,8 @@ public class BookRepositoryJpa implements BookRepository {
 
     @Override
     public List<DbBook> findByAuthorId(Long authorId) {
-        String sql = "SELECT b.id, b.title FROM book_author ba\n" +
-                "  LEFT JOIN book b on ba.book_id = b.id\n" +
-                "  WHERE author_id = ?";
-        TypedQuery<DbBook> query = entityManager.createQuery("SELECT b FROM DbBook b WHERE b", DbBook.class);
+        TypedQuery<DbBook> query = entityManager.createQuery("SELECT b FROM DbBook b JOIN b.authors a WHERE a.id = :author_id", DbBook.class);
+        query.setParameter("author_id", authorId);
         return query.getResultList();
     }
 }

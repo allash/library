@@ -1,14 +1,14 @@
-package ru.otus.library.app.book.dto.response;
+package ru.otus.library.app.comment.dto.response;
 
-public class DtoGetBookCommentResponse {
+public class DtoGetCommentResponse {
 
     private Long id;
     private String text;
 
-    public DtoGetBookCommentResponse() {
+    public DtoGetCommentResponse() {
     }
 
-    public DtoGetBookCommentResponse(Long id, String text) {
+    public DtoGetCommentResponse(Long id, String text) {
         this.id = id;
         this.text = text;
     }

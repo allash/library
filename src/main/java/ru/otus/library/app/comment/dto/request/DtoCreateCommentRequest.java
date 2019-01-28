@@ -1,4 +1,4 @@
-package ru.otus.library.app.book.dto.request;
+package ru.otus.library.app.comment.dto.request;
 
 import javax.validation.constraints.NotEmpty;
 

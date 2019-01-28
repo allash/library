@@ -3,9 +3,7 @@ package ru.otus.library.app.book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.otus.library.app.book.dto.request.DtoCreateCommentRequest;
 import ru.otus.library.app.book.dto.request.DtoCreateOrUpdateBookRequest;
-import ru.otus.library.app.book.dto.response.DtoGetBookCommentResponse;
 import ru.otus.library.app.book.dto.response.DtoGetBookResponse;
 
 import javax.validation.Valid;
@@ -43,7 +41,7 @@ public class BookController {
         return bookService.updateBook(id, dto);
     }
 
-    @GetMapping("/{bookId}/comments")
+   /* @GetMapping("/{bookId}/comments")
     public List<DtoGetBookCommentResponse> getCommentsByBookId(@PathVariable Long bookId) {
         return bookService.getCommentsByBookId(bookId);
     }
@@ -51,5 +49,5 @@ public class BookController {
     @PostMapping("/{bookId}/comments")
     public DtoGetBookCommentResponse createComment(@PathVariable Long bookId, @Valid @RequestBody DtoCreateCommentRequest body) {
         return bookService.createComment(bookId, body);
-    }
+    }*/
 }

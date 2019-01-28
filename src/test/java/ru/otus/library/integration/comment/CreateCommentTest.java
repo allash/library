@@ -1,4 +1,4 @@
-package ru.otus.library.integration.book;
+package ru.otus.library.integration.comment;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +45,7 @@ public class CreateCommentTest extends BaseSpringTest {
         AuthContext ctx = getValidContext();
 
         ResponseEntity<Object> result = new GenericRestClient.PostOrPut<DtoCreateCommentRequest, Object>()
-                .execute(createURL("/books/" + ctx.book.getId() + "/comments"), HttpMethod.POST, ctx.body, Object.class);
+                .execute(createURL("/comments/" + ctx.book.getId()), HttpMethod.POST, ctx.body, Object.class);
 
         assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
 
@@ -63,7 +63,7 @@ public class CreateCommentTest extends BaseSpringTest {
         AuthContext ctx = getValidContext();
 
         ResponseEntity<Object> result = new GenericRestClient.PostOrPut<DtoCreateCommentRequest, Object>()
-                .execute(createURL("/books/" + 252352 + "/comments"), HttpMethod.POST, ctx.body, Object.class);
+                .execute(createURL("/comments/" + 252352), HttpMethod.POST, ctx.body, Object.class);
 
         assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
