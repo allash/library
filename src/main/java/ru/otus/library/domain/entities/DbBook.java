@@ -29,9 +29,6 @@ public class DbBook {
     )
     private List<DbAuthor> authors;
 
-    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
-    private List<DbComment> comments;
-
     public DbBook() { }
 
     public DbBook(String title) {
@@ -87,14 +84,6 @@ public class DbBook {
 
     public void setAuthors(List<DbAuthor> authors) {
         this.authors = authors;
-    }
-
-    public List<DbComment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<DbComment> comments) {
-        this.comments = comments;
     }
 
     @Override

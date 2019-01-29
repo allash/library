@@ -9,9 +9,11 @@ import ru.otus.library.app.comment.dto.request.DtoCreateCommentRequest;
 import ru.otus.library.domain.entities.DbBook;
 import ru.otus.library.domain.entities.DbComment;
 import ru.otus.library.domain.repositories.interfaces.BookRepository;
+import ru.otus.library.domain.repositories.interfaces.CommentRepository;
 import ru.otus.library.integration.BaseSpringTest;
 import ru.otus.library.integration.GenericRestClient;
 
+import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class CreateCommentTest extends BaseSpringTest {
 
     @Autowired
-    private BookRepository bookRepository;
+    private CommentRepository commentRepository;
 
     public class AuthContext {
         DtoCreateCommentRequest body;
@@ -49,10 +51,10 @@ public class CreateCommentTest extends BaseSpringTest {
 
         assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
 
-        DbBook bookAfter = bookRepository.findById(ctx.book.getId());
-        assertThat(bookAfter.getComments().size()).isEqualTo(1);
+        List<DbComment> comments = commentRepository.findAllByBookId(ctx.book.getId());
+        assertThat(comments.size()).isEqualTo(1);
 
-        DbComment createdComment = bookAfter.getComments().get(0);
+        DbComment createdComment = comments.get(0);
         assertThat(createdComment.getBookId()).isEqualTo(ctx.book.getId());
         assertThat(createdComment.getText()).isEqualTo(ctx.body.getText());
     }
