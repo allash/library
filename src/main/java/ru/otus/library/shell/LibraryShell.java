@@ -7,7 +7,9 @@ import org.springframework.shell.standard.ShellOption;
 import ru.otus.library.app.author.dto.request.DtoCreateOrUpdateAuthorRequest;
 import ru.otus.library.app.author.dto.response.DtoGetAuthorBookResponse;
 import ru.otus.library.app.author.dto.response.DtoGetAuthorResponse;
+import ru.otus.library.app.comment.dto.request.DtoCreateCommentRequest;
 import ru.otus.library.app.book.dto.request.DtoCreateOrUpdateBookRequest;
+import ru.otus.library.app.comment.dto.response.DtoGetCommentResponse;
 import ru.otus.library.app.book.dto.response.DtoGetBookResponse;
 import ru.otus.library.app.genre.dto.request.DtoCreateOrUpdateGenreRequest;
 import ru.otus.library.app.genre.dto.response.DtoGetGenreResponse;
@@ -43,7 +45,7 @@ public class LibraryShell extends BaseShell {
     }
 
     @ShellMethod(value = "Get books by author id", key = "getauthorbooks")
-    public String getBooksByAuthorId(@ShellOption Integer authorId) {
+    public String getBooksByAuthorId(@ShellOption Long authorId) {
         List<DtoGetAuthorBookResponse> books = getResultList("/authors/" + authorId + "/books",
                 new ParameterizedTypeReference<List<DtoGetAuthorBookResponse>>() { });
 
@@ -114,5 +116,23 @@ public class LibraryShell extends BaseShell {
         });
 
         return "New genre created: " + response.getId() + " - " + response.getName();
+    }
+
+    @ShellMethod(value = "Get comments", key = "getcomments")
+    public String getComments(@ShellOption Long bookId) {
+        List<DtoGetCommentResponse> result = getResultList("/comments/" + bookId, new ParameterizedTypeReference<List<DtoGetCommentResponse>>() {});
+
+        return result
+                .stream()
+                .map(it -> it.getId() + " - " + it.getText())
+                .collect(Collectors.joining("\n"));
+    }
+
+    @ShellMethod(value = "Create comment", key = "createcomment")
+    public String createComment(@ShellOption Long bookId, @ShellOption String text) {
+        DtoCreateCommentRequest request = new DtoCreateCommentRequest(text);
+        postRequest("/comments/" + bookId, request, new ParameterizedTypeReference<DtoGetCommentResponse>() { });
+
+        return "Comment for book [" + bookId + "] was created.";
     }
 }

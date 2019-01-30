@@ -1,4 +1,4 @@
-package ru.otus.library;
+package ru.otus.library.unit.services;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,8 +13,8 @@ import ru.otus.library.app.author.AuthorServiceImpl;
 import ru.otus.library.app.author.dto.request.DtoCreateOrUpdateAuthorRequest;
 import ru.otus.library.app.author.dto.response.DtoGetAuthorResponse;
 import ru.otus.library.domain.entities.DbAuthor;
-import ru.otus.library.domain.repositories.AuthorRepository;
-import ru.otus.library.domain.repositories.BookRepository;
+import ru.otus.library.domain.repositories.interfaces.AuthorRepository;
+import ru.otus.library.domain.repositories.interfaces.BookRepository;
 
 import java.util.*;
 import java.util.stream.Collectors;

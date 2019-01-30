@@ -1,4 +1,4 @@
-package ru.otus.library.domain.repositories;
+package ru.otus.library.domain.repositories.impl.jdbc;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import ru.otus.library.domain.entities.DbAuthor;
 import ru.otus.library.domain.entities.DbBook;
 import ru.otus.library.domain.entities.DbGenre;
+import ru.otus.library.domain.repositories.interfaces.BookRepository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,20 +29,19 @@ public class BookRepositoryJdbc implements BookRepository {
     }
 
     @Override
-    public int count() {
-        return namedParamsJdbcOperations.getJdbcOperations().queryForObject("SELECT count(*) FROM book", Integer.class);
+    public long count() {
+        return namedParamsJdbcOperations.getJdbcOperations().queryForObject("SELECT count(*) FROM book", Long.class);
     }
 
     @Override
-    public DbBook findById(Integer id) {
+    public DbBook findById(Long id) {
         final Map<String, Object> params = new HashMap<>(1);
         params.put("id", id);
         return namedParamsJdbcOperations.queryForObject("SELECT * FROM book where id = :id", params, new BookRowMapper());
     }
 
     @Override
-    public List<DbBook> findByIdIn(Collection<Integer> collection) {
-
+    public List<DbBook> findByIdIn(Collection<Long> collection) {
         Map namedParams = Collections.singletonMap("ids", collection);
         return namedParamsJdbcOperations.query("SELECT * FROM book WHERE id IN (:ids)", namedParams, new BookRowMapper());
     }
@@ -100,7 +100,7 @@ public class BookRepositoryJdbc implements BookRepository {
     }
 
     @Override
-    public List<DbBook> findByAuthorId(Integer authorId) {
+    public List<DbBook> findByAuthorId(Long authorId) {
         String sql = "SELECT b.id, b.title FROM book_author ba\n" +
                 "  LEFT JOIN book b on ba.book_id = b.id\n" +
                 "  WHERE author_id = ?";

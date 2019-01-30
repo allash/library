@@ -1,4 +1,4 @@
-package ru.otus.library.domain.repositories;
+package ru.otus.library.domain.repositories.impl.jdbc;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
@@ -6,6 +6,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ru.otus.library.domain.entities.DbAuthor;
+import ru.otus.library.domain.repositories.interfaces.AuthorRepository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,8 +23,8 @@ public class AuthorRepositoryJdbc implements AuthorRepository {
     }
 
     @Override
-    public int count() {
-        return namedParamsJdbcOperations.getJdbcOperations().queryForObject("SELECT count(*) FROM author", Integer.class);
+    public long count() {
+        return namedParamsJdbcOperations.getJdbcOperations().queryForObject("SELECT count(*) FROM author", Long.class);
     }
 
     @Override
@@ -62,7 +63,7 @@ public class AuthorRepositoryJdbc implements AuthorRepository {
     }
 
     @Override
-    public DbAuthor findById(Integer id) {
+    public DbAuthor findById(Long id) {
         final Map<String, Object> params = new HashMap<>(1);
         params.put("id", id);
         return namedParamsJdbcOperations.queryForObject("SELECT * FROM author where id = :id", params, new AuthorRowMapper());

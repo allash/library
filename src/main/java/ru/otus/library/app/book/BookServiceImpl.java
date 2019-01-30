@@ -5,9 +5,9 @@ import org.springframework.stereotype.Service;
 import ru.otus.library.app.book.dto.request.DtoCreateOrUpdateBookRequest;
 import ru.otus.library.app.book.dto.response.DtoGetBookResponse;
 import ru.otus.library.domain.entities.DbBook;
-import ru.otus.library.domain.repositories.AuthorRepository;
-import ru.otus.library.domain.repositories.BookRepository;
-import ru.otus.library.domain.repositories.GenreRepository;
+import ru.otus.library.domain.repositories.interfaces.AuthorRepository;
+import ru.otus.library.domain.repositories.interfaces.BookRepository;
+import ru.otus.library.domain.repositories.interfaces.GenreRepository;
 import ru.otus.library.shared.exceptions.book.BookNotFoundByIdException;
 
 import java.util.List;
@@ -37,7 +37,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public DtoGetBookResponse getBookById(Integer id) {
+    public DtoGetBookResponse getBookById(Long id) {
 
         DbBook book = bookRepository.findById(id);
         if (book == null) throw new BookNotFoundByIdException(id);
@@ -54,7 +54,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public DtoGetBookResponse updateBook(Integer id, DtoCreateOrUpdateBookRequest dto) {
+    public DtoGetBookResponse updateBook(Long id, DtoCreateOrUpdateBookRequest dto) {
 
         DbBook book = bookRepository.findById(id);
         if (book == null) throw new BookNotFoundByIdException(id);

@@ -26,7 +26,7 @@ public class GenreController {
     }
 
     @GetMapping("/{id}")
-    public DtoGetGenreResponse getGenreById(@PathVariable Integer id) {
+    public DtoGetGenreResponse getGenreById(@PathVariable Long id) {
         return genreService.getGenreById(id);
     }
 
@@ -37,7 +37,7 @@ public class GenreController {
     }
 
     @PutMapping("/id")
-    public DtoGetGenreResponse updateGenre(@PathVariable Integer id, @Valid @RequestBody DtoCreateOrUpdateGenreRequest dto) {
+    public DtoGetGenreResponse updateGenre(@PathVariable Long id, @Valid @RequestBody DtoCreateOrUpdateGenreRequest dto) {
         return genreService.updateGenre(id, dto);
     }
 }

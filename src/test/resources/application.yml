@@ -1,0 +1,50 @@
+server:
+  port: 8081
+
+logging:
+  level:
+    ROOT: INFO
+    ru:
+      otus: DEBUG
+    springfox:
+      documentation: WARN
+    org:
+      springframework: WARN
+      flywaydb:
+        core:
+          internal:
+            command:
+              DbMigrate: WARN
+
+spring:
+  profiles:
+    active: test
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:library_test;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false
+    username: library
+    password: library
+  enableMigration: true
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob.non_contextual_creation: true
+
+  shell:
+    interactive:
+      enabled: false
+  flyway:
+    locations: classpath:/db/migration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info, health, beans
+
+language-tag: en-US
+
+library:
+  api: http://localhost:8081/api
+
+

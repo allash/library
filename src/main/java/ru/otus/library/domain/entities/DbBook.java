@@ -1,14 +1,32 @@
 package ru.otus.library.domain.entities;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "book")
 public class DbBook {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
 
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(
+            name = "book_genre",
+            joinColumns = { @JoinColumn(name = "book_id") },
+            inverseJoinColumns = { @JoinColumn(name = "genre_id") }
+    )
     private List<DbGenre> genres;
+
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(
+            name = "book_author",
+            joinColumns = { @JoinColumn(name = "book_id") },
+            inverseJoinColumns = { @JoinColumn(name = "author_id") }
+    )
     private List<DbAuthor> authors;
 
     public DbBook() { }

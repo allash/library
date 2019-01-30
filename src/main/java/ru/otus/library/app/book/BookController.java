@@ -26,7 +26,7 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public DtoGetBookResponse getBookById(@PathVariable Integer id) {
+    public DtoGetBookResponse getBookById(@PathVariable Long id) {
         return bookService.getBookById(id);
     }
 
@@ -37,7 +37,17 @@ public class BookController {
     }
 
     @PutMapping("/id")
-    public DtoGetBookResponse updateBook(@PathVariable Integer id, @Valid @RequestBody DtoCreateOrUpdateBookRequest dto) {
+    public DtoGetBookResponse updateBook(@PathVariable Long id, @Valid @RequestBody DtoCreateOrUpdateBookRequest dto) {
         return bookService.updateBook(id, dto);
     }
+
+   /* @GetMapping("/{bookId}/comments")
+    public List<DtoGetBookCommentResponse> getCommentsByBookId(@PathVariable Long bookId) {
+        return bookService.getCommentsByBookId(bookId);
+    }
+
+    @PostMapping("/{bookId}/comments")
+    public DtoGetBookCommentResponse createComment(@PathVariable Long bookId, @Valid @RequestBody DtoCreateCommentRequest body) {
+        return bookService.createComment(bookId, body);
+    }*/
 }
