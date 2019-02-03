@@ -1,23 +1,19 @@
-package ru.otus.library.integration.repositories;
+package ru.otus.library.unit.repositories;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.test.context.junit4.SpringRunner;
 import ru.otus.library.domain.entities.DbGenre;
 import ru.otus.library.domain.repositories.interfaces.GenreRepositoryJpa;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
-@DataJpaTest
-public class GenreRepositoryTest {
+public class GenreRepositoryTest extends BaseRepositoryTest {
 
     @Autowired
     private TestEntityManager entityManager;
@@ -26,7 +22,7 @@ public class GenreRepositoryTest {
     private GenreRepositoryJpa genreRepository;
 
     @Test
-    public void whenFindAll_thenReturnList() {
+    public void canFindAllItems() {
 
         List<DbGenre> genresToSave = Arrays.asList(
                 new DbGenre(UUID.randomUUID().toString()),
@@ -40,5 +36,29 @@ public class GenreRepositoryTest {
 
         List<DbGenre> result = genreRepository.findAll();
         assertThat(result.size()).isEqualTo(genresToSave.size());
+    }
+
+    @Test
+    public void canFindById() {
+
+        DbGenre genre = new DbGenre(UUID.randomUUID().toString());
+
+        entityManager.persist(genre);
+        entityManager.flush();
+
+        Optional<DbGenre> genreFound = genreRepository.findById(1L);
+        assertThat(genreFound.isPresent()).isTrue();
+        assertThat(genreFound.get().getName()).isEqualTo(genre.getName());
+    }
+
+    @Test
+    public void canCreateNewItem() {
+        DbGenre genre = new DbGenre(UUID.randomUUID().toString());
+
+        genreRepository.save(genre);
+
+        List<DbGenre> genres = genreRepository.findAll();
+        assertThat(genres.size()).isEqualTo(1);
+        assertThat(genres.get(0).getName()).isEqualTo(genre.getName());
     }
 }
