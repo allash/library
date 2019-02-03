@@ -6,7 +6,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ru.otus.library.domain.entities.DbGenre;
-import ru.otus.library.domain.repositories.interfaces.GenreRepository;
+import ru.otus.library.domain.repositories.interfaces.old.GenreRepository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,11 +14,11 @@ import java.sql.SQLException;
 import java.util.*;
 
 @Repository
-public class GenreRepositoryJdbc implements GenreRepository {
+public class GenreRepositoryJdbcImpl implements GenreRepository {
 
     private final NamedParameterJdbcOperations namedParamsJdbcOperations;
 
-    public GenreRepositoryJdbc(NamedParameterJdbcOperations namedParamsJdbcOperations) {
+    public GenreRepositoryJdbcImpl(NamedParameterJdbcOperations namedParamsJdbcOperations) {
         this.namedParamsJdbcOperations = namedParamsJdbcOperations;
     }
 

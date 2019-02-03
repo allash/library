@@ -6,10 +6,10 @@ import ru.otus.library.domain.entities.DbAuthor;
 import ru.otus.library.domain.entities.DbBook;
 import ru.otus.library.domain.entities.DbComment;
 import ru.otus.library.domain.entities.DbGenre;
-import ru.otus.library.domain.repositories.interfaces.AuthorRepository;
-import ru.otus.library.domain.repositories.interfaces.BookRepository;
-import ru.otus.library.domain.repositories.interfaces.CommentRepository;
-import ru.otus.library.domain.repositories.interfaces.GenreRepository;
+import ru.otus.library.domain.repositories.interfaces.old.AuthorRepository;
+import ru.otus.library.domain.repositories.interfaces.old.BookRepository;
+import ru.otus.library.domain.repositories.interfaces.old.CommentRepository;
+import ru.otus.library.domain.repositories.interfaces.old.GenreRepository;
 
 import java.util.ArrayList;
 import java.util.List;

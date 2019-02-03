@@ -6,7 +6,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ru.otus.library.domain.entities.DbAuthor;
-import ru.otus.library.domain.repositories.interfaces.AuthorRepository;
+import ru.otus.library.domain.repositories.interfaces.old.AuthorRepository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,11 +14,11 @@ import java.sql.SQLException;
 import java.util.*;
 
 @Repository
-public class AuthorRepositoryJdbc implements AuthorRepository {
+public class AuthorRepositoryJdbcImpl implements AuthorRepository {
 
     private final NamedParameterJdbcOperations namedParamsJdbcOperations;
 
-    public AuthorRepositoryJdbc(NamedParameterJdbcOperations namedParamsJdbcOperations) {
+    public AuthorRepositoryJdbcImpl(NamedParameterJdbcOperations namedParamsJdbcOperations) {
         this.namedParamsJdbcOperations = namedParamsJdbcOperations;
     }
 

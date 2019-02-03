@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import ru.otus.library.domain.entities.DbAuthor;
 import ru.otus.library.domain.entities.DbBook;
 import ru.otus.library.domain.entities.DbGenre;
-import ru.otus.library.domain.repositories.interfaces.BookRepository;
+import ru.otus.library.domain.repositories.interfaces.old.BookRepository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,12 +19,12 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Repository
-public class BookRepositoryJdbc implements BookRepository {
+public class BookRepositoryJdbcImpl implements BookRepository {
 
     private final NamedParameterJdbcOperations namedParamsJdbcOperations;
 
     @Autowired
-    public BookRepositoryJdbc(NamedParameterJdbcOperations namedParamsJdbcOperations) {
+    public BookRepositoryJdbcImpl(NamedParameterJdbcOperations namedParamsJdbcOperations) {
         this.namedParamsJdbcOperations = namedParamsJdbcOperations;
     }
 

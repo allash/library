@@ -1,4 +1,4 @@
-package ru.otus.library.domain.repositories.interfaces;
+package ru.otus.library.domain.repositories.interfaces.old;
 
 import ru.otus.library.domain.entities.DbBook;
 

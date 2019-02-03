@@ -14,11 +14,12 @@ import ru.otus.library.app.comment.dto.request.DtoCreateCommentRequest;
 import ru.otus.library.app.comment.dto.response.DtoGetCommentResponse;
 import ru.otus.library.domain.entities.DbBook;
 import ru.otus.library.domain.entities.DbComment;
-import ru.otus.library.domain.repositories.interfaces.BookRepository;
-import ru.otus.library.domain.repositories.interfaces.CommentRepository;
+import ru.otus.library.domain.repositories.interfaces.BookRepositoryJpa;
+import ru.otus.library.domain.repositories.interfaces.CommentRepositoryJpa;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,10 +31,10 @@ public class CommentServiceTest {
     private CommentService commentService;
 
     @Mock
-    private BookRepository bookRepository;
+    private BookRepositoryJpa bookRepository;
 
     @Mock
-    private CommentRepository commentRepository;
+    private CommentRepositoryJpa commentRepository;
 
     @Before
     public void setUp() {
@@ -49,7 +50,7 @@ public class CommentServiceTest {
         DbComment comment2 = new DbComment(1L, UUID.randomUUID().toString());
         List<DbComment> dbComments = Arrays.asList(comment1, comment2);
 
-        Mockito.when(commentRepository.findAllByBookId(bookId)).thenReturn(dbComments);
+        Mockito.when(commentRepository.findByBookId(bookId)).thenReturn(dbComments);
 
         List<DtoGetCommentResponse> response = commentService.getCommentsByBookId(bookId);
 
@@ -67,7 +68,7 @@ public class CommentServiceTest {
         DbBook book = new DbBook(1L, UUID.randomUUID().toString());
         DtoCreateCommentRequest request = new DtoCreateCommentRequest(UUID.randomUUID().toString());
 
-        Mockito.when(bookRepository.findById(bookId)).thenReturn(book);
+        Mockito.when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
         Mockito.when(commentRepository.save(any())).thenReturn(new DbComment(commentId, request.getText()));
 
         DtoGetCommentResponse response = commentService.createComment(bookId, request);

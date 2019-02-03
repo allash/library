@@ -15,10 +15,10 @@ import ru.otus.library.app.book.dto.response.DtoGetBookResponse;
 import ru.otus.library.domain.entities.DbAuthor;
 import ru.otus.library.domain.entities.DbBook;
 import ru.otus.library.domain.entities.DbGenre;
-import ru.otus.library.domain.repositories.interfaces.AuthorRepository;
-import ru.otus.library.domain.repositories.interfaces.BookRepository;
-import ru.otus.library.domain.repositories.interfaces.CommentRepository;
-import ru.otus.library.domain.repositories.interfaces.GenreRepository;
+import ru.otus.library.domain.repositories.interfaces.AuthorRepositoryJpa;
+import ru.otus.library.domain.repositories.interfaces.BookRepositoryJpa;
+import ru.otus.library.domain.repositories.interfaces.CommentRepositoryJpa;
+import ru.otus.library.domain.repositories.interfaces.GenreRepositoryJpa;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -36,16 +36,16 @@ public class BookServiceTest {
     private BookService bookService;
 
     @Mock
-    private BookRepository bookRepository;
+    private BookRepositoryJpa bookRepository;
 
     @Mock
-    private GenreRepository genreRepository;
+    private GenreRepositoryJpa genreRepository;
 
     @Mock
-    private AuthorRepository authorRepository;
+    private AuthorRepositoryJpa authorRepository;
 
     @Mock
-    private CommentRepository commentRepository;
+    private CommentRepositoryJpa commentRepository;
 
     @Before
     public void setUp() {

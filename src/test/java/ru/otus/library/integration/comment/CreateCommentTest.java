@@ -8,8 +8,7 @@ import org.springframework.http.ResponseEntity;
 import ru.otus.library.app.comment.dto.request.DtoCreateCommentRequest;
 import ru.otus.library.domain.entities.DbBook;
 import ru.otus.library.domain.entities.DbComment;
-import ru.otus.library.domain.repositories.interfaces.BookRepository;
-import ru.otus.library.domain.repositories.interfaces.CommentRepository;
+import ru.otus.library.domain.repositories.interfaces.old.CommentRepository;
 import ru.otus.library.integration.BaseSpringTest;
 import ru.otus.library.integration.GenericRestClient;
 

@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import ru.otus.library.app.genre.dto.response.DtoGetGenreResponse;
 import ru.otus.library.domain.entities.DbGenre;
-import ru.otus.library.domain.repositories.interfaces.GenreRepository;
+import ru.otus.library.domain.repositories.interfaces.old.GenreRepository;
 import ru.otus.library.integration.BaseSpringTest;
 import ru.otus.library.integration.GenericRestClient;
 

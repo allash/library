@@ -3,7 +3,7 @@ package ru.otus.library.domain.repositories.impl.jpa;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 import ru.otus.library.domain.entities.DbBook;
-import ru.otus.library.domain.repositories.interfaces.BookRepository;
+import ru.otus.library.domain.repositories.interfaces.old.BookRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import java.util.Map;
 
 @Primary
 @Repository
-public class BookRepositoryJpa implements BookRepository {
+public class BookRepositoryJpaImpl implements BookRepository {
 
     @PersistenceContext
     private EntityManager entityManager;

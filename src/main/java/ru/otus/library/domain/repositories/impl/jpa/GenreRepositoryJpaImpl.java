@@ -2,21 +2,18 @@ package ru.otus.library.domain.repositories.impl.jpa;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ru.otus.library.domain.entities.DbGenre;
-import ru.otus.library.domain.repositories.interfaces.GenreRepository;
+import ru.otus.library.domain.repositories.interfaces.old.GenreRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 @Primary
 @Repository
-public class GenreRepositoryJpa implements GenreRepository {
+public class GenreRepositoryJpaImpl implements GenreRepository {
 
     @PersistenceContext
     private EntityManager entityManager;

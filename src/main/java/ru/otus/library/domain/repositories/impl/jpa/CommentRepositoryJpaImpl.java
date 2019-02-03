@@ -3,7 +3,7 @@ package ru.otus.library.domain.repositories.impl.jpa;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 import ru.otus.library.domain.entities.DbComment;
-import ru.otus.library.domain.repositories.interfaces.CommentRepository;
+import ru.otus.library.domain.repositories.interfaces.old.CommentRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @Primary
 @Repository
-public class CommentRepositoryImpl implements CommentRepository {
+public class CommentRepositoryJpaImpl implements CommentRepository {
 
     @PersistenceContext
     private EntityManager entityManager;

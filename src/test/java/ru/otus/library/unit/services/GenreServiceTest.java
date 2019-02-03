@@ -13,7 +13,7 @@ import ru.otus.library.app.genre.GenreServiceImpl;
 import ru.otus.library.app.genre.dto.request.DtoCreateOrUpdateGenreRequest;
 import ru.otus.library.app.genre.dto.response.DtoGetGenreResponse;
 import ru.otus.library.domain.entities.DbGenre;
-import ru.otus.library.domain.repositories.interfaces.GenreRepository;
+import ru.otus.library.domain.repositories.interfaces.GenreRepositoryJpa;
 
 import java.util.Comparator;
 import java.util.List;
@@ -29,7 +29,7 @@ public class GenreServiceTest {
     private GenreService genreService;
 
     @Mock
-    private GenreRepository genreRepository;
+    private GenreRepositoryJpa genreRepository;
 
     @Before
     public void setUp() {
