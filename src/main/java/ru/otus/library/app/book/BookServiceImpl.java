@@ -11,6 +11,7 @@ import ru.otus.library.domain.repositories.interfaces.GenreRepository;
 import ru.otus.library.shared.exceptions.book.BookNotFoundByIdException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -39,10 +40,10 @@ public class BookServiceImpl implements BookService {
     @Override
     public DtoGetBookResponse getBookById(Long id) {
 
-        DbBook book = bookRepository.findById(id);
-        if (book == null) throw new BookNotFoundByIdException(id);
+        Optional<DbBook> book = bookRepository.findById(id);
+        if (!book.isPresent()) throw new BookNotFoundByIdException(id);
 
-        return mapper.toDto(book);
+        return mapper.toDto(book.get());
     }
 
     @Override
@@ -56,9 +57,10 @@ public class BookServiceImpl implements BookService {
     @Override
     public DtoGetBookResponse updateBook(Long id, DtoCreateOrUpdateBookRequest dto) {
 
-        DbBook book = bookRepository.findById(id);
-        if (book == null) throw new BookNotFoundByIdException(id);
+        Optional<DbBook> bookOptional = bookRepository.findById(id);
+        if (!bookOptional.isPresent()) throw new BookNotFoundByIdException(id);
 
+        DbBook book = bookOptional.get();
         book.setTitle(dto.getTitle());
         book.setGenres(genreRepository.findByIdIn(dto.getGenreIds()));
         book.setAuthors(authorRepository.findByIdIn(dto.getAuthorIds()));

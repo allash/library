@@ -22,9 +22,18 @@ public class DbComment {
     public DbComment() {
     }
 
-    public DbComment(Long id, String text) {
-        this.id = id;
+    public DbComment(String text) {
         this.text = text;
+    }
+
+    public DbComment(Long id, String text) {
+        this(text);
+        this.id = id;
+    }
+
+    public DbComment(String text, DbBook book) {
+        this(text);
+        this.setBook(book);
     }
 
     public Long getId() {

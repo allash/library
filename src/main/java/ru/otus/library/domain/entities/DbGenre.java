@@ -9,6 +9,7 @@ public class DbGenre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "title")
     private String name;
 
     public DbGenre() { }

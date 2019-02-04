@@ -11,6 +11,7 @@ import ru.otus.library.domain.repositories.interfaces.BookRepository;
 import ru.otus.library.shared.exceptions.author.AuthorNotFoundByIdException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
@@ -37,10 +38,10 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public DtoGetAuthorResponse getAuthorById(Long id) {
 
-        DbAuthor author = authorRepository.findById(id);
-        if (author == null) throw new AuthorNotFoundByIdException(id);
+        Optional<DbAuthor> author = authorRepository.findById(id);
+        if (!author.isPresent()) throw new AuthorNotFoundByIdException(id);
 
-        return mapper.toDto(author);
+        return mapper.toDto(author.get());
     }
 
     @Override
@@ -52,9 +53,10 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public DtoGetAuthorResponse updateAuthor(Long id, DtoCreateOrUpdateAuthorRequest dto) {
 
-        DbAuthor author = authorRepository.findById(id);
-        if (author == null) throw new AuthorNotFoundByIdException(id);
+        Optional<DbAuthor> authorOptional = authorRepository.findById(id);
+        if (!authorOptional.isPresent()) throw new AuthorNotFoundByIdException(id);
 
+        DbAuthor author = authorOptional.get();
         author.setFirstName(dto.getFirstName());
         author.setLastName(dto.getLastName());
 
@@ -63,7 +65,8 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public List<DtoGetAuthorBookResponse> getBooksByAuthorId(Long id) {
-        if (authorRepository.findById(id) == null) throw new AuthorNotFoundByIdException(id);
-        return mapper.toDto(bookRepository.findByAuthorId(id));
+        Optional<DbAuthor> author = authorRepository.findById(id);
+        if (!author.isPresent()) throw new AuthorNotFoundByIdException(id);
+        return mapper.toDto(bookRepository.findByAuthorsId(id));
     }
 }

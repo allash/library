@@ -11,6 +11,7 @@ import ru.otus.library.domain.repositories.interfaces.CommentRepository;
 import ru.otus.library.shared.exceptions.book.BookNotFoundByIdException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -28,17 +29,17 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<DtoGetCommentResponse> getCommentsByBookId(Long bookId) {
-        return mapper.toCommentsList(commentRepository.findAllByBookId(bookId));
+        return mapper.toCommentsList(commentRepository.findByBookId(bookId));
     }
 
     @Override
     public DtoGetCommentResponse createComment(Long bookId, DtoCreateCommentRequest dto) {
-        DbBook book = bookRepository.findById(bookId);
-        if (book == null) throw new BookNotFoundByIdException(bookId);
+        Optional<DbBook> book = bookRepository.findById(bookId);
+        if (!book.isPresent()) throw new BookNotFoundByIdException(bookId);
 
         DbComment comment = new DbComment();
         comment.setText(dto.getText());
-        comment.setBook(book);
+        comment.setBook(book.get());
         return mapper.toCommentDto(commentRepository.save(comment));
     }
 }

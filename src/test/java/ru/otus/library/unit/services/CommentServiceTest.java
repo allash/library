@@ -19,6 +19,7 @@ import ru.otus.library.domain.repositories.interfaces.CommentRepository;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -49,7 +50,7 @@ public class CommentServiceTest {
         DbComment comment2 = new DbComment(1L, UUID.randomUUID().toString());
         List<DbComment> dbComments = Arrays.asList(comment1, comment2);
 
-        Mockito.when(commentRepository.findAllByBookId(bookId)).thenReturn(dbComments);
+        Mockito.when(commentRepository.findByBookId(bookId)).thenReturn(dbComments);
 
         List<DtoGetCommentResponse> response = commentService.getCommentsByBookId(bookId);
 
@@ -67,7 +68,7 @@ public class CommentServiceTest {
         DbBook book = new DbBook(1L, UUID.randomUUID().toString());
         DtoCreateCommentRequest request = new DtoCreateCommentRequest(UUID.randomUUID().toString());
 
-        Mockito.when(bookRepository.findById(bookId)).thenReturn(book);
+        Mockito.when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
         Mockito.when(commentRepository.save(any())).thenReturn(new DbComment(commentId, request.getText()));
 
         DtoGetCommentResponse response = commentService.createComment(bookId, request);

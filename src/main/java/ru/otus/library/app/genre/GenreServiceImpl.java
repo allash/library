@@ -1,7 +1,6 @@
 package ru.otus.library.app.genre;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.otus.library.app.genre.dto.request.DtoCreateOrUpdateGenreRequest;
 import ru.otus.library.app.genre.dto.response.DtoGetGenreResponse;
@@ -10,6 +9,7 @@ import ru.otus.library.domain.repositories.interfaces.GenreRepository;
 import ru.otus.library.shared.exceptions.genre.GenreNotFoundByIdException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GenreServiceImpl implements GenreService {
@@ -31,10 +31,10 @@ public class GenreServiceImpl implements GenreService {
     @Override
     public DtoGetGenreResponse getGenreById(Long id) {
 
-        DbGenre genre = genreRepository.findById(id);
-        if (genre == null) throw new GenreNotFoundByIdException(id);
+        Optional<DbGenre> genre = genreRepository.findById(id);
+        if (!genre.isPresent()) throw new GenreNotFoundByIdException(id);
 
-        return mapper.toDto(genre);
+        return mapper.toDto(genre.get());
     }
 
     @Override
@@ -45,11 +45,11 @@ public class GenreServiceImpl implements GenreService {
     @Override
     public DtoGetGenreResponse updateGenre(Long id, DtoCreateOrUpdateGenreRequest dto) {
 
-        DbGenre genre = genreRepository.findById(id);
-        if (genre == null) throw new GenreNotFoundByIdException(id);
+        Optional<DbGenre> genre = genreRepository.findById(id);
+        if (!genre.isPresent()) throw new GenreNotFoundByIdException(id);
 
-        genre.setName(dto.getName());
+        genre.get().setName(dto.getName());
 
-        return mapper.toDto(genreRepository.save(genre));
+        return mapper.toDto(genreRepository.save(genre.get()));
     }
 }

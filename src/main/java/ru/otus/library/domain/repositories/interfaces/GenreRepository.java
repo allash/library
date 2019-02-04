@@ -1,14 +1,15 @@
 package ru.otus.library.domain.repositories.interfaces;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.stereotype.Repository;
 import ru.otus.library.domain.entities.DbGenre;
 
-import java.util.Collection;
 import java.util.List;
 
-public interface GenreRepository {
-    long count();
-    DbGenre findById(Long id);
-    List<DbGenre> findAll();
-    DbGenre save(DbGenre entity);
-    List<DbGenre> findByIdIn(Collection<Long> collection);
+@Repository
+public interface GenreRepository extends
+        JpaRepository<DbGenre, Long>,
+        JpaSpecificationExecutor<DbGenre> {
+    List<DbGenre> findByIdIn(List<Long> ids);
 }
