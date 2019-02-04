@@ -6,8 +6,8 @@ import ru.otus.library.app.author.dto.request.DtoCreateOrUpdateAuthorRequest;
 import ru.otus.library.app.author.dto.response.DtoGetAuthorBookResponse;
 import ru.otus.library.app.author.dto.response.DtoGetAuthorResponse;
 import ru.otus.library.domain.entities.DbAuthor;
-import ru.otus.library.domain.repositories.interfaces.AuthorRepositoryJpa;
-import ru.otus.library.domain.repositories.interfaces.BookRepositoryJpa;
+import ru.otus.library.domain.repositories.interfaces.AuthorRepository;
+import ru.otus.library.domain.repositories.interfaces.BookRepository;
 import ru.otus.library.shared.exceptions.author.AuthorNotFoundByIdException;
 
 import java.util.List;
@@ -16,14 +16,14 @@ import java.util.Optional;
 @Service
 public class AuthorServiceImpl implements AuthorService {
 
-    private AuthorRepositoryJpa authorRepository;
-    private BookRepositoryJpa bookRepository;
+    private AuthorRepository authorRepository;
+    private BookRepository bookRepository;
     private AuthorMapper mapper;
 
     @Autowired
     public AuthorServiceImpl(
-            AuthorRepositoryJpa authorRepository,
-            BookRepositoryJpa bookRepository,
+            AuthorRepository authorRepository,
+            BookRepository bookRepository,
             AuthorMapper mapper) {
         this.authorRepository = authorRepository;
         this.bookRepository = bookRepository;

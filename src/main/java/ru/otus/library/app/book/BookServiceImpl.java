@@ -5,9 +5,9 @@ import org.springframework.stereotype.Service;
 import ru.otus.library.app.book.dto.request.DtoCreateOrUpdateBookRequest;
 import ru.otus.library.app.book.dto.response.DtoGetBookResponse;
 import ru.otus.library.domain.entities.DbBook;
-import ru.otus.library.domain.repositories.interfaces.AuthorRepositoryJpa;
-import ru.otus.library.domain.repositories.interfaces.BookRepositoryJpa;
-import ru.otus.library.domain.repositories.interfaces.GenreRepositoryJpa;
+import ru.otus.library.domain.repositories.interfaces.AuthorRepository;
+import ru.otus.library.domain.repositories.interfaces.BookRepository;
+import ru.otus.library.domain.repositories.interfaces.GenreRepository;
 import ru.otus.library.shared.exceptions.book.BookNotFoundByIdException;
 
 import java.util.List;
@@ -16,15 +16,15 @@ import java.util.Optional;
 @Service
 public class BookServiceImpl implements BookService {
 
-    private BookRepositoryJpa bookRepository;
-    private GenreRepositoryJpa genreRepository;
-    private AuthorRepositoryJpa authorRepository;
+    private BookRepository bookRepository;
+    private GenreRepository genreRepository;
+    private AuthorRepository authorRepository;
     private BookMapper mapper;
 
     @Autowired
-    public BookServiceImpl(BookRepositoryJpa bookRepository,
-                           GenreRepositoryJpa genreRepository,
-                           AuthorRepositoryJpa authorRepository,
+    public BookServiceImpl(BookRepository bookRepository,
+                           GenreRepository genreRepository,
+                           AuthorRepository authorRepository,
                            BookMapper mapper) {
         this.bookRepository = bookRepository;
         this.genreRepository = genreRepository;

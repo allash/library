@@ -13,8 +13,8 @@ import ru.otus.library.app.author.AuthorServiceImpl;
 import ru.otus.library.app.author.dto.request.DtoCreateOrUpdateAuthorRequest;
 import ru.otus.library.app.author.dto.response.DtoGetAuthorResponse;
 import ru.otus.library.domain.entities.DbAuthor;
-import ru.otus.library.domain.repositories.interfaces.AuthorRepositoryJpa;
-import ru.otus.library.domain.repositories.interfaces.BookRepositoryJpa;
+import ru.otus.library.domain.repositories.interfaces.AuthorRepository;
+import ru.otus.library.domain.repositories.interfaces.BookRepository;
 
 import java.util.Comparator;
 import java.util.List;
@@ -31,10 +31,10 @@ public class AuthorServiceTest {
     private AuthorService authorService;
 
     @Mock
-    private AuthorRepositoryJpa authorRepository;
+    private AuthorRepository authorRepository;
 
     @Mock
-    private BookRepositoryJpa bookRepository;
+    private BookRepository bookRepository;
 
     @Before
     public void setUp() {

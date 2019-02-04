@@ -9,7 +9,7 @@ import ru.otus.library.app.book.dto.request.DtoCreateOrUpdateBookRequest;
 import ru.otus.library.domain.entities.DbAuthor;
 import ru.otus.library.domain.entities.DbBook;
 import ru.otus.library.domain.entities.DbGenre;
-import ru.otus.library.domain.repositories.interfaces.old.BookRepository;
+import ru.otus.library.domain.repositories.interfaces.BookRepository;
 import ru.otus.library.integration.BaseSpringTest;
 import ru.otus.library.integration.GenericRestClient;
 

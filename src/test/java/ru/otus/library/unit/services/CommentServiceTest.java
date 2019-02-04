@@ -14,8 +14,8 @@ import ru.otus.library.app.comment.dto.request.DtoCreateCommentRequest;
 import ru.otus.library.app.comment.dto.response.DtoGetCommentResponse;
 import ru.otus.library.domain.entities.DbBook;
 import ru.otus.library.domain.entities.DbComment;
-import ru.otus.library.domain.repositories.interfaces.BookRepositoryJpa;
-import ru.otus.library.domain.repositories.interfaces.CommentRepositoryJpa;
+import ru.otus.library.domain.repositories.interfaces.BookRepository;
+import ru.otus.library.domain.repositories.interfaces.CommentRepository;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,10 +31,10 @@ public class CommentServiceTest {
     private CommentService commentService;
 
     @Mock
-    private BookRepositoryJpa bookRepository;
+    private BookRepository bookRepository;
 
     @Mock
-    private CommentRepositoryJpa commentRepository;
+    private CommentRepository commentRepository;
 
     @Before
     public void setUp() {

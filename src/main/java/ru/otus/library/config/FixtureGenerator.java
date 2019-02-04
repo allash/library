@@ -6,10 +6,10 @@ import ru.otus.library.domain.entities.DbAuthor;
 import ru.otus.library.domain.entities.DbBook;
 import ru.otus.library.domain.entities.DbComment;
 import ru.otus.library.domain.entities.DbGenre;
-import ru.otus.library.domain.repositories.interfaces.AuthorRepositoryJpa;
-import ru.otus.library.domain.repositories.interfaces.BookRepositoryJpa;
-import ru.otus.library.domain.repositories.interfaces.CommentRepositoryJpa;
-import ru.otus.library.domain.repositories.interfaces.GenreRepositoryJpa;
+import ru.otus.library.domain.repositories.interfaces.AuthorRepository;
+import ru.otus.library.domain.repositories.interfaces.BookRepository;
+import ru.otus.library.domain.repositories.interfaces.CommentRepository;
+import ru.otus.library.domain.repositories.interfaces.GenreRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,16 +18,16 @@ import java.util.List;
 @Transactional
 public class FixtureGenerator {
 
-    private AuthorRepositoryJpa authorRepository;
-    private BookRepositoryJpa bookRepository;
-    private GenreRepositoryJpa genreRepository;
-    private CommentRepositoryJpa commentRepository;
+    private AuthorRepository authorRepository;
+    private BookRepository bookRepository;
+    private GenreRepository genreRepository;
+    private CommentRepository commentRepository;
 
     public FixtureGenerator(
-            AuthorRepositoryJpa authorRepository,
-            BookRepositoryJpa bookRepository,
-            GenreRepositoryJpa genreRepository,
-            CommentRepositoryJpa commentRepository
+            AuthorRepository authorRepository,
+            BookRepository bookRepository,
+            GenreRepository genreRepository,
+            CommentRepository commentRepository
     ) {
         this.authorRepository = authorRepository;
         this.bookRepository = bookRepository;

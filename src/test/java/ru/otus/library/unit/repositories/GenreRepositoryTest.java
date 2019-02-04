@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import ru.otus.library.domain.entities.DbGenre;
-import ru.otus.library.domain.repositories.interfaces.GenreRepositoryJpa;
+import ru.otus.library.domain.repositories.interfaces.GenreRepository;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,7 +19,7 @@ public class GenreRepositoryTest extends BaseRepositoryTest {
     private TestEntityManager entityManager;
 
     @Autowired
-    private GenreRepositoryJpa genreRepository;
+    private GenreRepository genreRepository;
 
     @Test
     public void canFindAllItems() {

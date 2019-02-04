@@ -6,8 +6,8 @@ import ru.otus.library.app.comment.dto.request.DtoCreateCommentRequest;
 import ru.otus.library.app.comment.dto.response.DtoGetCommentResponse;
 import ru.otus.library.domain.entities.DbBook;
 import ru.otus.library.domain.entities.DbComment;
-import ru.otus.library.domain.repositories.interfaces.BookRepositoryJpa;
-import ru.otus.library.domain.repositories.interfaces.CommentRepositoryJpa;
+import ru.otus.library.domain.repositories.interfaces.BookRepository;
+import ru.otus.library.domain.repositories.interfaces.CommentRepository;
 import ru.otus.library.shared.exceptions.book.BookNotFoundByIdException;
 
 import java.util.List;
@@ -16,12 +16,12 @@ import java.util.Optional;
 @Service
 public class CommentServiceImpl implements CommentService {
 
-    private BookRepositoryJpa bookRepository;
-    private CommentRepositoryJpa commentRepository;
+    private BookRepository bookRepository;
+    private CommentRepository commentRepository;
     private CommentMapper mapper;
 
     @Autowired
-    public CommentServiceImpl(BookRepositoryJpa bookRepository, CommentRepositoryJpa commentRepository, CommentMapper mapper) {
+    public CommentServiceImpl(BookRepository bookRepository, CommentRepository commentRepository, CommentMapper mapper) {
         this.bookRepository = bookRepository;
         this.commentRepository = commentRepository;
         this.mapper = mapper;

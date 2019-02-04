@@ -1,13 +1,10 @@
 package ru.otus.library.unit.repositories;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.test.context.junit4.SpringRunner;
 import ru.otus.library.domain.entities.DbBook;
-import ru.otus.library.domain.repositories.interfaces.BookRepositoryJpa;
+import ru.otus.library.domain.repositories.interfaces.BookRepository;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,7 +19,7 @@ public class BookRepositoryTest extends BaseRepositoryTest {
     private TestEntityManager entityManager;
 
     @Autowired
-    private BookRepositoryJpa bookRepository;
+    private BookRepository bookRepository;
 
     @Test
     public void canFindAllItems() {

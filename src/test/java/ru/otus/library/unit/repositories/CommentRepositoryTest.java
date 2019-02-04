@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import ru.otus.library.domain.entities.DbBook;
 import ru.otus.library.domain.entities.DbComment;
-import ru.otus.library.domain.repositories.interfaces.BookRepositoryJpa;
-import ru.otus.library.domain.repositories.interfaces.CommentRepositoryJpa;
+import ru.otus.library.domain.repositories.interfaces.BookRepository;
+import ru.otus.library.domain.repositories.interfaces.CommentRepository;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,10 +21,10 @@ public class CommentRepositoryTest extends BaseRepositoryTest {
     private TestEntityManager entityManager;
 
     @Autowired
-    private CommentRepositoryJpa commentRepository;
+    private CommentRepository commentRepository;
 
     @Autowired
-    private BookRepositoryJpa bookRepositoryJpa;
+    private BookRepository bookRepositoryJpa;
 
     @Test
     public void canFindAllItems() {

@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import ru.otus.library.app.comment.dto.request.DtoCreateCommentRequest;
 import ru.otus.library.domain.entities.DbBook;
 import ru.otus.library.domain.entities.DbComment;
-import ru.otus.library.domain.repositories.interfaces.old.CommentRepository;
+import ru.otus.library.domain.repositories.interfaces.CommentRepository;
 import ru.otus.library.integration.BaseSpringTest;
 import ru.otus.library.integration.GenericRestClient;
 
@@ -50,7 +50,7 @@ public class CreateCommentTest extends BaseSpringTest {
 
         assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
 
-        List<DbComment> comments = commentRepository.findAllByBookId(ctx.book.getId());
+        List<DbComment> comments = commentRepository.findByBookId(ctx.book.getId());
         assertThat(comments.size()).isEqualTo(1);
 
         DbComment createdComment = comments.get(0);

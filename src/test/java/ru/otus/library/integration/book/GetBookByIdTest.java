@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import ru.otus.library.app.book.dto.response.DtoGetBookResponse;
 import ru.otus.library.domain.entities.DbBook;
-import ru.otus.library.domain.repositories.interfaces.old.BookRepository;
+import ru.otus.library.domain.repositories.interfaces.BookRepository;
 import ru.otus.library.integration.BaseSpringTest;
 import ru.otus.library.integration.GenericRestClient;
 

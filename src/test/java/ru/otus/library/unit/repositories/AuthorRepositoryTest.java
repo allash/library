@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import ru.otus.library.domain.entities.DbAuthor;
-import ru.otus.library.domain.repositories.interfaces.AuthorRepositoryJpa;
+import ru.otus.library.domain.repositories.interfaces.AuthorRepository;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,7 +19,7 @@ public class AuthorRepositoryTest extends BaseRepositoryTest {
     private TestEntityManager entityManager;
 
     @Autowired
-    private AuthorRepositoryJpa authorRepository;
+    private AuthorRepository authorRepository;
 
     @Test
     public void canFindAllItems() {

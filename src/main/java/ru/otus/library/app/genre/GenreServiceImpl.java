@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.otus.library.app.genre.dto.request.DtoCreateOrUpdateGenreRequest;
 import ru.otus.library.app.genre.dto.response.DtoGetGenreResponse;
 import ru.otus.library.domain.entities.DbGenre;
-import ru.otus.library.domain.repositories.interfaces.GenreRepositoryJpa;
+import ru.otus.library.domain.repositories.interfaces.GenreRepository;
 import ru.otus.library.shared.exceptions.genre.GenreNotFoundByIdException;
 
 import java.util.List;
@@ -14,11 +14,11 @@ import java.util.Optional;
 @Service
 public class GenreServiceImpl implements GenreService {
 
-    private GenreRepositoryJpa genreRepository;
+    private GenreRepository genreRepository;
     private GenreMapper mapper;
 
     @Autowired
-    public GenreServiceImpl(GenreRepositoryJpa genreRepository, GenreMapper mapper) {
+    public GenreServiceImpl(GenreRepository genreRepository, GenreMapper mapper) {
         this.genreRepository = genreRepository;
         this.mapper = mapper;
     }
